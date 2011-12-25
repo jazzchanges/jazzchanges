@@ -4,6 +4,7 @@ import os
 PROJECT_DIR = os.path.dirname(__file__)
 PUBLIC_DIR = os.path.join(PROJECT_DIR, 'public')
 
+
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
@@ -122,6 +123,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging

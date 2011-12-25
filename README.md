@@ -22,7 +22,7 @@ If you're not using virtualenv or virtualenvwrapper you may skip this step.
 
 ### Clone the code ###
 Obtain the url to your git repository.
-```git clone <URL_TO_GIT_RESPOSITORY> jazzchanges```
+```git clone https://github.com/bryanhelmig/jazzchanges jazzchanges```
 
 ### Install requirements ###
 ```cd jazzchanges```
@@ -34,8 +34,9 @@ Obtain the url to your git repository.
 
 ```vi jazzchanges/local_settings.py```
 
-### Sync database ###
+### Sync databases & migrate ###
 ```python manage.py syncdb```
+```python manage.py migrate```
 
 ## Running ##
 ```python manage.py runserver```

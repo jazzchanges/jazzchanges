@@ -4,3 +4,5 @@
 local_settings.py
 public/static
 public/media
+
+*.sqlite
