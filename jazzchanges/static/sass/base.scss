@@ -1,3 +1,15 @@
+@font-face {
+    font-family: 'MuseJazzMedium';
+    src: url('../fonts/musejazz-webfont.eot');
+    src: url('../fonts/musejazz-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/musejazz-webfont.woff') format('woff'),
+         url('../fonts/musejazz-webfont.ttf') format('truetype'),
+         url('../fonts/musejazz-webfont.svg#MuseJazzMedium') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 .topbar {
   .brand {
     font-weight:bold;
@@ -86,25 +98,6 @@
     }
   }
 
-  form {
-    fieldset {
-      margin-bottom:0;
-
-      label {
-        width:180px;
-      }
-
-      .input {
-        margin-left:200px;
-      }
-
-      .actions {
-        margin-bottom:0;
-        padding-left:200px;
-      }
-    } // fieldset
-  }
-
   .content {
     padding-top:20px;
 
@@ -131,6 +124,69 @@
         float:right;
         margin-left:4px;
       }
+
+      h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
+        color: #888;
+
+        .smaller {
+          font-size:14px;
+          color:#aaa;
+        }
+      }
     }
   } // content
 } //  workspace
+
+.sheet {
+  .staff {
+    height:110px;
+    background:transparent url('../images/lines-90.png') 0 20px repeat-x;
+
+    .clef {
+      float:left;
+      background:transparent url('../images/treble-90.png') 50% 50% no-repeat;
+      height:90px;
+      width:50px;
+      margin-top:20px;
+    }
+
+    .time {
+      padding:27px 0 0;
+      float:left;
+      font-family: 'MuseJazzMedium', Arial, sans-serif;
+      font-size:44px;
+      line-height:38px;
+      width:30px;
+      text-align:center;
+    }
+
+    .chords {
+      float:right;
+      height:40px;
+
+      .chord {
+        float:left;
+        font-family: 'MuseJazzMedium', Arial, sans-serif;
+        font-size:24px;
+        line-height:32px;
+
+        width:38px; // 620 / (4 * 4) # 4 measures of 4 (system length)
+      }
+    }
+
+    .bars {
+      float:right;
+      height:50px;
+
+      .barline {
+        height:50px;
+        float:left;
+        border-right:transparent solid 2px;
+
+        &.show {
+          border-right:#333 solid 2px;
+        }
+      }
+    }
+  }
+}

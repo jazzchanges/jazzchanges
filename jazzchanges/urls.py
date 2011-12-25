@@ -21,7 +21,7 @@ urlpatterns = patterns('',
         {'pass_form': NewPasswordChangeForm, 'template_name': 'userena/password_form.html'}),
 
     url(r'^accounts/', include('userena.urls')),
-    
+    url(r'^tunes/', include('jazzchanges.tunes.urls', namespace='tunes')),
 
     url(r'^$', direct_to_template, {'template': 'content/homepage.html'})
 )

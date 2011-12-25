@@ -2,31 +2,23 @@
 
 {% block nav_fluid %}-fluid{% endblock nav_fluid %}
 
-{% block nav %}
-  <a class="brand" href="#">Title</a>
-
-  <ul class="nav">
-    <li class="active"><a href="#">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-{% endblock nav %}
+{% block container_fluid %}-fluid{% endblock container_fluid %}
 
 {% block content %}
   <div class="sidebar">
     <div class="well">
       {% block inner_sidebar %}
-        <h3>Sidebar:</h4>
+        <h3>Your Tunes:</h4>
 
         <ul>
-          {% for item in some_list %}
-            <li><a href="#">Something</a></li>
+          {% for tune in request.user.tunes.all %}
+            <li><a href="{% url tunes:view tune.id %}">{{ tune.title }}</a> <small>{{ tune.get_key_display }} &amp; {{ tune.get_time_display }}</small></li>
           {% empty %}
-            <li>None! You should <a href="#">add one!</a></li>
+            <li>None! You should <a href="{% url tunes:new %}">add one!</a></li>
           {% endfor %}
         </ul>
 
-        <a class="btn success small" href="#">Create New Product</a>
+        <a class="btn success small" href="{% url tunes:new %}">Add New Tune</a>
         <br />
       {% endblock inner_sidebar %}
     </div>
@@ -36,7 +28,7 @@
     {% block breadcrumb %}
       <ul class="breadcrumb">
         {% block breadcrumb_inner %}
-          <li class="active">Home.</li>
+          <li class="active">Your Tunes</li>
         {% endblock breadcrumb_inner %}
       </ul>
     {% endblock breadcrumb %}

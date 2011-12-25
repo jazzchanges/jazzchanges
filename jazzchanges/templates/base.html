@@ -40,6 +40,7 @@
             <ul class="nav">
               <li class="active"><a href="/">Home</a></li>
               {% if request.user.is_authenticated %}
+                <li><a href="{% url tunes:workspace %}">Your Tunes</a></li>
                 <li><a href="{% url userena_profile_detail request.user.username %}">Your Profile</a></li>
                 <li><a href="{% url userena_signout %}">Sign Out</a></li>
               {% else %}
@@ -55,7 +56,7 @@
     {% block promo %}{% endblock promo %}
 
     
-    <div class="container workspace">
+    <div class="container{% block container_fluid %}{% endblock container_fluid %} workspace">
       {% block content_top %}{% endblock content_top %}
 
       {% block content %}

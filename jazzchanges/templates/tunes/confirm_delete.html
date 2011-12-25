@@ -1,0 +1,20 @@
+{% extends "tunes/base.html" %}
+
+{% block breadcrumb_inner %}
+  <li><a href="{% url tunes:workspace %}">Your Tunes</a> <span class="divider">/</span></li>
+  <li><a href="{% url tunes:view tune.id %}">{{ tune }}</a> <span class="divider">/</span></li>
+  <li class="active">Editing</li>
+{% endblock breadcrumb_inner %}
+
+{% block inner_content %}
+    <h2>Are you sure you'd like to delete this tune?</h2>
+    
+    <br /> 
+
+    <p>You won't be able to get it back ever again. That means its gone.</p>
+    
+    <br />
+    <br />
+
+    <p><a class="btn large error" href="?confirm=yes">Delete this tune.</a> &nbsp; <a href="{% url tunes:view tune.id %}">Do not delete this tune.</a></p>
+{% endblock inner_content %}

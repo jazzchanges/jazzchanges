@@ -1,23 +1,23 @@
 /*
 Syntax error: Undefined mixin 'border-radius'.
-        on line 39 of jazzchanges/static/sass/base.scss, in `border-radius'
-        from line 39 of jazzchanges/static/sass/base.scss
+        on line 51 of jazzchanges/static/sass/base.scss, in `border-radius'
+        from line 51 of jazzchanges/static/sass/base.scss
 
-34:       }
-35:     }
-36:   } // promo info
-37: 
-38:   .promo-search {
-39:     @include border-radius(5px);
-40: 
-41:     width:350px;
-42:     float:right;
-43:     background:#fff;
-44:     text-shadow:none;
+46:       }
+47:     }
+48:   } // promo info
+49: 
+50:   .promo-search {
+51:     @include border-radius(5px);
+52: 
+53:     width:350px;
+54:     float:right;
+55:     background:#fff;
+56:     text-shadow:none;
 
 Backtrace:
-jazzchanges/static/sass/base.scss:39:in `border-radius'
-jazzchanges/static/sass/base.scss:39
+jazzchanges/static/sass/base.scss:51:in `border-radius'
+jazzchanges/static/sass/base.scss:51
 /Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/tree/visitors/perform.rb:168:in `visit_mixin'
 /Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/tree/visitors/base.rb:37:in `send'
 /Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/tree/visitors/base.rb:37:in `visit'
@@ -94,4 +94,4 @@ jazzchanges/static/sass/base.scss:39
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Syntax error: Undefined mixin 'border-radius'.\A         on line 39 of jazzchanges/static/sass/base.scss, in `border-radius'\A         from line 39 of jazzchanges/static/sass/base.scss\A \A 34:       }\A 35:     }\A 36:   } // promo info\A 37: \A 38:   .promo-search {\A 39:     @include border-radius(5px);\A 40: \A 41:     width:350px;\A 42:     float:right;\A 43:     background:#fff;\A 44:     text-shadow:none;"; }
+  content: "Syntax error: Undefined mixin 'border-radius'.\A         on line 51 of jazzchanges/static/sass/base.scss, in `border-radius'\A         from line 51 of jazzchanges/static/sass/base.scss\A \A 46:       }\A 47:     }\A 48:   } // promo info\A 49: \A 50:   .promo-search {\A 51:     @include border-radius(5px);\A 52: \A 53:     width:350px;\A 54:     float:right;\A 55:     background:#fff;\A 56:     text-shadow:none;"; }
