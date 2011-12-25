@@ -11,12 +11,12 @@ Create a virtual python enviroment for the project.
 If you're not using virtualenv or virtualenvwrapper you may skip this step.
 
 #### For virtualenvwrapper ####
-```mkvirtualenv --no-site-packages jazzchanges-env```
+```mkvirtualenv --no-site-packages jazzchangesenv```
 
 #### For virtualenv ####
-```virtualenv --no-site-packages jazzchanges-env```
+```virtualenv --no-site-packages jazzchangesenv```
 
-```cd jazzchanges-env```
+```cd jazzchangesenv```
 
 ```source bin/activate```
 

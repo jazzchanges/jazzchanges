@@ -54,6 +54,7 @@ MEDIA_URL = '/media/'
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
 STATIC_ROOT = os.path.join(PUBLIC_DIR, 'static')
+STATIC_SOURCE = os.path.join(PROJECT_DIR, 'static')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -64,7 +65,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(PROJECT_DIR, 'static'),
+    STATIC_SOURCE,
 )
 
 # List of finder classes that know how to find static files in
@@ -125,6 +126,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     'south',
+
+    'jazzchanges.tunes',
 )
 
 # A sample logging configuration. The only tangible logging

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+
+{% block promo %}
+  <div class="promo">
+    <div class="container">
+      <div class="promo-info">
+        <h1>This is a header.</h1>
+        <p>This is some other information.</p>
+        <ul>
+          <li>Here is a list thing.</li>
+          <li>Here is a list thing.</li>
+        </ul>
+      </div>
+
+      <div class="promo-search">
+        <div class="promo-heading">
+         <h3>Search Now!</h3>
+        </div>
+
+        <form>
+          <fieldset>
+            <div class="clearfix">
+              <label for="xlInput">Title</label>
+              <div class="input">
+                <input class="large" id="xlInput" name="xlInput" size="30" type="text">
+              </div>
+            </div>
+            <div class="actions">
+              <input type="submit" class="btn success" value="Find Tune Now &rarr;">
+            </div>
+          </fieldset>
+        </form>
+
+      </div>
+
+    <div class="clearfix"></div>
+    </div> 
+  </div> <!-- promo -->
+{% endblock promo %}

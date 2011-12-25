@@ -1,0 +1,13 @@
+<div class="clearfix{% if errors %} error{% endif %}">
+    {{ label }}
+    <div class="input">
+        <span class="input-prepend">
+          <span class="add-on">$</span>
+          {{ bf }}
+        </span>
+        {% if errors %}
+        <span class="help-inline">{{ errors }}</span>
+        {% endif %}
+        <span class="help-block">{{ help_text }}</span>
+    </div>
+</div> <!-- /clearfix -->

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block nav_fluid %}-fluid{% endblock nav_fluid %}
+{% block container_fluid %}-fluid workspace{% endblock container_fluid %}
+
+{% block nav %}
+  <a class="brand" href="#">Title</a>
+
+  <ul class="nav">
+    <li class="active"><a href="#">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+{% endblock nav %}
+
+{% block content %}
+  <div class="sidebar">
+    <div class="well">
+      {% block inner_sidebar %}
+        <h3>Sidebar:</h4>
+
+        <ul>
+          {% for item in some_list %}
+            <li><a href="#">Something</a></li>
+          {% empty %}
+            <li>None! You should <a href="#">add one!</a></li>
+          {% endfor %}
+        </ul>
+
+        <a class="btn success small" href="#">Create New Product</a>
+        <br />
+      {% endblock inner_sidebar %}
+    </div>
+  </div>
+
+  <div class="content">
+    {% block breadcrumb %}
+      <ul class="breadcrumb">
+        {% block breadcrumb_inner %}
+          <li class="active">Home.</li>
+        {% endblock breadcrumb_inner %}
+      </ul>
+    {% endblock breadcrumb %}
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert-message{% if message.tags %} {{ message.tags }}{% endif %}">
+          <a class="close ignore" href="#">×</a>
+          <p>{{ message }}</p>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    {% block inner_content %}
+     <h1>Hello!</h1>
+    {% endblock inner_content %}
+  </div>
+{% endblock content %}

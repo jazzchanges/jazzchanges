@@ -28,6 +28,9 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     'south',
+
+    'jazzchanges.tunes',
+
     'devserver',
 )
 

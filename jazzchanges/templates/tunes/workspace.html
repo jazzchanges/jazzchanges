@@ -1,0 +1,13 @@
+{% extends "products/base.html" %}
+
+{% block alerts %}{% endblock alerts %}
+
+{% block inner_content %}
+  {% if not customuser.stipe_setup or not customuser.get_products|length%}
+    <div class="hero-unit">
+      <h2>Welcome to your Workspace!</h2>
+      <p>This is a hero unit.</p>
+      <p><a href="#" class="btn primary">Important Button</a> <a href="#" class="btn success">Not Important Button</a></p>
+    </div>
+  {% endif %}
+{% endblock inner_content %}
