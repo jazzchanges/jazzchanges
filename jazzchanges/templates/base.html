@@ -35,12 +35,17 @@
       <div class="fill">
         <div class="container{% block nav_fluid %}{% endblock nav_fluid %}">
           {% block nav %}
-            <a class="brand" href="#">JazzChanges.net</a>
+            <a class="brand" href="/">JazzChanges.net</a>
 
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li class="active"><a href="/">Home</a></li>
+              {% if request.user.is_authenticated %}
+                <li><a href="{% url userena_profile_detail request.user.username %}">Your Profile</a></li>
+                <li><a href="{% url userena_signout %}">Sign Out</a></li>
+              {% else %}
+                <li><a href="{% url userena_signup %}">Sign Up</a></li>
+                <li><a href="{% url userena_signin %}">Sign In</a></li>
+              {% endif %}
             </ul>
           {% endblock nav %}
         </div>
@@ -50,7 +55,9 @@
     {% block promo %}{% endblock promo %}
 
     
-    <div class="container{% block container_fluid %}{% endblock container_fluid %}">
+    <div class="container workspace">
+      {% block content_top %}{% endblock content_top %}
+
       {% block content %}
         <!-- Main hero unit for a primary marketing message or call to action -->
         <div class="hero-unit" style="margin-top:20px;">
@@ -78,7 +85,9 @@
           </div>
         </div>
       {% endblock content %}
+      <div class="clearfix"></div>
 
+      {% block content_bottom %}{% endblock content_bottom %}
       <div class="clearfix"></div>
 
       <footer>

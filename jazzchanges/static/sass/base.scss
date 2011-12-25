@@ -86,6 +86,25 @@
     }
   }
 
+  form {
+    fieldset {
+      margin-bottom:0;
+
+      label {
+        width:180px;
+      }
+
+      .input {
+        margin-left:200px;
+      }
+
+      .actions {
+        margin-bottom:0;
+        padding-left:200px;
+      }
+    } // fieldset
+  }
+
   .content {
     padding-top:20px;
 

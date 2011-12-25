@@ -124,6 +124,10 @@ FIXTURE_DIRS = (
 ANONYMOUS_USER_ID = -1
 AUTH_PROFILE_MODULE = 'customuser.UserProfile'
 
+LOGIN_REDIRECT_URL = '/accounts/%(username)s/'
+LOGIN_URL = '/accounts/signin/'
+LOGOUT_URL = '/accounts/signout/'
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -138,6 +142,8 @@ INSTALLED_APPS = (
     'userena', 
     'guardian',
     'easy_thumbnails',
+
+    'bootstrap',
 
     'jazzchanges.tunes',
     'jazzchanges.customuser',

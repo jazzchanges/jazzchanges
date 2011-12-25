@@ -1,0 +1,19 @@
+{% extends 'userena/base_userena.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Account setup" %}{% endblock %}
+
+{% block content_title %}<h2>{% blocktrans with profile.user.username as username %}Account &raquo; {{ username }}{% endblocktrans %}</h2>{% endblock %}
+
+{% block content %}
+
+<form action="" enctype="multipart/form-data" method="post">
+  {% csrf_token %}
+
+  {{ form.as_div }}
+
+  <div class="actions">
+    <input type="submit" class="btn success" value="Submit &rarr;">
+  </div>
+</form>
+{% endblock %}
