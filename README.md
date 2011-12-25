@@ -11,10 +11,10 @@ Create a virtual python enviroment for the project.
 If you're not using virtualenv or virtualenvwrapper you may skip this step.
 
 #### For virtualenvwrapper ####
-```mkvirtualenv --no-site-packages jazzchangesenv```
+```mkvirtualenv --no-site-packages --distribute jazzchangesenv```
 
 #### For virtualenv ####
-```virtualenv --no-site-packages jazzchangesenv```
+```virtualenv --no-site-packages --distribute jazzchangesenv```
 
 ```cd jazzchangesenv```
 

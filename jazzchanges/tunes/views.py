@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.forms.models import model_to_dict
 
-from jazzchanges.tunes.models import Tune, Change
+from jazzchanges.tunes.models import Tune, Change, KEYS
 from jazzchanges.tunes.forms import TuneForm
 
 @login_required
@@ -34,6 +34,7 @@ def new_tune(request):
 @login_required
 def view_tune(request, tune_id, key=None):
     tune = get_object_or_404(Tune, owner=request.user, id=tune_id)
+    keys = KEYS
 
     if key:
         key = int(key)
@@ -52,7 +53,7 @@ def view_tune(request, tune_id, key=None):
 @login_required
 def edit_tune(request, tune_id):
     tune = get_object_or_404(Tune, owner=request.user, id=tune_id)
-    
+
     if request.method == 'POST':
         form = EditTune(request.POST, request.FILES)
 

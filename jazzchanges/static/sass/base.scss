@@ -125,6 +125,20 @@
         margin-left:4px;
       }
 
+      .dropdown-toggle::after {
+        margin-top: 5px;
+      }
+
+      .dropdown-menu {
+        border:1px solid rgba(0, 0, 0, 0.2);
+        @include border-radius(6px);
+        top:33px;
+
+        a {
+          font-size: 18px;
+        }
+      }
+
       h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
         color: #888;
 

@@ -2339,6 +2339,16 @@ input[type=submit].btn::-moz-focus-inner {
   .workspace .content .page-header a.btn {
     float: right;
     margin-left: 4px; }
+  .workspace .content .page-header .dropdown-toggle::after {
+    margin-top: 5px; }
+  .workspace .content .page-header .dropdown-menu {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    top: 33px; }
+    .workspace .content .page-header .dropdown-menu a {
+      font-size: 18px; }
   .workspace .content .page-header h1 small, .workspace .content .page-header h2 small, .workspace .content .page-header h3 small, .workspace .content .page-header h4 small, .workspace .content .page-header h5 small, .workspace .content .page-header h6 small {
     color: #888; }
     .workspace .content .page-header h1 small .smaller, .workspace .content .page-header h2 small .smaller, .workspace .content .page-header h3 small .smaller, .workspace .content .page-header h4 small .smaller, .workspace .content .page-header h5 small .smaller, .workspace .content .page-header h6 small .smaller {
