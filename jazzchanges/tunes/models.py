@@ -94,7 +94,7 @@ class Change(models.Model):
         """
         Returns a chord and sets to chord attribute as text.
 
-        Key is an int 1-12.
+        Key is an integer 1-12.
         """
         key = key if key else self.tune.key
 
