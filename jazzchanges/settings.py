@@ -81,13 +81,18 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
 
+AUTHENTICATION_BACKENDS = (
+    'userena.backends.UserenaAuthenticationBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'jazzchanges.urls'
@@ -116,6 +121,9 @@ FIXTURE_DIRS = (
     os.path.join(PROJECT_DIR, 'fixtures'),
 )
 
+ANONYMOUS_USER_ID = -1
+AUTH_PROFILE_MODULE = 'customuser.UserProfile'
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -127,7 +135,12 @@ INSTALLED_APPS = (
 
     'south',
 
+    'userena', 
+    'guardian',
+    'easy_thumbnails',
+
     'jazzchanges.tunes',
+    'jazzchanges.customuser',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -138,15 +151,9 @@ INSTALLED_APPS = (
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
-    },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
-            'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         }
     },

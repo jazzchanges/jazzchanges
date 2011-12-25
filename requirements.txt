@@ -1,5 +1,10 @@
-Django==1.4-alpha-1
+Django==1.3.1
+PIL==1.1.7
 South==0.7.3
+-e git://github.com/earle/django-bootstrap.git@7776aafd64faae9c3c3699b1b44de259bc8c3e1b#egg=bootstrap-dev
 distribute==0.6.24
 django-devserver==0.3.1
+django-guardian==1.0.3
+django-userena==1.0.2
+easy-thumbnails==1.0-alpha-21
 wsgiref==0.1.2
