@@ -1,0 +1,30 @@
+{% extends "tunes/base.html" %}
+
+{% block container_fluid %}{% endblock container_fluid %}
+
+{% block content %}
+  <div class="content">
+    <br />
+
+    <div class="page-header">
+      <h1>{{ tune.title }} <small><span class="smaller">key of</span> {{ letter_key }} <span class="smaller">&amp; in</span> {{ tune.get_time_display }} <span class="smaller">time</span></small> 
+        {% if key != tune.key %}
+          <a class="btn small" href="{% url tunes:view_key tune.id key %}">Exit Fullscreen</a>
+        {% else %}
+          <a class="btn small" href="{% url tunes:view tune.id %}">Exit Fullscreen</a>
+        {% endif %}
+
+        <div class="dropdown" style="float:right" data-dropdown="dropdown">
+          <a class="btn success small dropdown-toggle" href="#">Transpose</a>
+          <ul class="dropdown-menu">
+            {% for i, target_key in keys %}
+              <li><a href="{% url tunes:view_key_fullscreen tune.id i %}">{{ target_key }}{% if i == tune.key %} (original){% endif %}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </h1>
+    </div>
+
+    {% include "tunes/sheet.html" with width=840 %}
+  </div>
+{% endblock content %}

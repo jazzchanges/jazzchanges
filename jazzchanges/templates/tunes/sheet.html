@@ -1,0 +1,19 @@
+<div class="sheet">
+  {% for system in systems %}
+    <div class="staff">
+      <div class="clef"></div>
+      <div class="time">{{ tune.beats_per_measure }}<br />{{ tune.note_value }}</div>
+      <div class="chords">
+        {% for change in system %}
+          <div class="chord" style="width:{% widthratio width tune.beats_per_system 1 %}px">{% ifchanged %}{{ change.chord }}{% else %}&nbsp;{% endifchanged %}</div>
+        {% endfor %}
+      </div>
+
+      <div class="bars">
+        {% for change in system %}
+          <div class="barline{% if forloop.counter|divisibleby:tune.beats_per_measure %} show{% endif %}" style="width:{% widthratio width tune.beats_per_system 1 %}px">&nbsp;</div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</div>

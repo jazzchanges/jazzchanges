@@ -46,6 +46,10 @@ def chunks(l, n):
         yield l[i:i+n]
 
 class Tune(models.Model):
+    def __init__(self, *args, **kwargs):
+        self.length = SYSTEM_LENGTH
+        super(Tune, self).__init__(*args, **kwargs)
+    
     title = models.CharField(max_length=255)
     key = models.PositiveIntegerField(choices=KEYS)
     time = models.CharField(max_length=12, default='4/4', choices=TIMES)
@@ -55,6 +59,10 @@ class Tune(models.Model):
     @property
     def beats_per_measure(self):
         return int(self.time.split('/')[0])
+    
+    @property
+    def beats_per_system(self):
+        return self.beats_per_measure * self.length
 
     @property
     def note_value(self):
@@ -67,20 +75,17 @@ class Tune(models.Model):
     def get_systems(self, **kwargs):
         """
         Return a tuple of a nested list of changes for a system (four bars) with
-        respect to the changes and the width (rounded down) of px per chord.
+        respect to the changes.
         """
-        length = kwargs.pop('length', SYSTEM_LENGTH)
-        width = kwargs.pop('width', 620)
+        self.length = kwargs.pop('length', self.length)
 
         changes = self.get_changes(**kwargs)
-
-        beats_per_system = self.beats_per_measure * length
 
         full_list = []
         for change in changes:
             full_list += [change] * change.beats
 
-        return list(chunks(full_list, beats_per_system)), int( (float(width) / ( beats_per_system ) ) )
+        return list(chunks(full_list, self.beats_per_system))
     
     def __unicode__(self):
         return u'%s in %s' % (self.title, self.get_key_display())

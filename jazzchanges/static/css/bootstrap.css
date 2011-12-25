@@ -2302,9 +2302,9 @@ input[type=submit].btn::-moz-focus-inner {
           margin-bottom: 0;
           padding-left: 90px; }
 
-.workspace .sidebar {
+.sidebar {
   padding-top: 20px; }
-  .workspace .sidebar .well {
+  .sidebar .well {
     padding: 7px 14px;
     margin: 0 0 18px;
     background-color: #f5f5f5;
@@ -2324,34 +2324,35 @@ input[type=submit].btn::-moz-focus-inner {
     -webkit-box-shadow: inset 0 1px 0 white;
     -moz-box-shadow: inset 0 1px 0 white;
     box-shadow: inset 0 1px 0 white; }
-.workspace .content {
+
+.content {
   padding-top: 20px; }
-  .workspace .content .hero-unit {
+  .content .hero-unit {
     margin-top: 0; }
-  .workspace .content form .input-xlarge, .workspace .content form input.xlarge, .workspace .content form textarea.xlarge, .workspace .content form select.xlarge {
+  .content form .input-xlarge, .content form input.xlarge, .content form textarea.xlarge, .content form select.xlarge {
     width: 360px; }
-  .workspace .content form .help-inline {
+  .content form .help-inline {
     display: block;
     float: right;
     width: 170px; }
-  .workspace .content form .help-block {
+  .content form .help-block {
     color: #aaa; }
-  .workspace .content .page-header a.btn {
+  .content .page-header a.btn {
     float: right;
     margin-left: 4px; }
-  .workspace .content .page-header .dropdown-toggle::after {
+  .content .page-header .dropdown-toggle::after {
     margin-top: 5px; }
-  .workspace .content .page-header .dropdown-menu {
+  .content .page-header .dropdown-menu {
     border: 1px solid rgba(0, 0, 0, 0.2);
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 6px;
     top: 33px; }
-    .workspace .content .page-header .dropdown-menu a {
+    .content .page-header .dropdown-menu a {
       font-size: 18px; }
-  .workspace .content .page-header h1 small, .workspace .content .page-header h2 small, .workspace .content .page-header h3 small, .workspace .content .page-header h4 small, .workspace .content .page-header h5 small, .workspace .content .page-header h6 small {
+  .content .page-header h1 small, .content .page-header h2 small, .content .page-header h3 small, .content .page-header h4 small, .content .page-header h5 small, .content .page-header h6 small {
     color: #666; }
-    .workspace .content .page-header h1 small .smaller, .workspace .content .page-header h2 small .smaller, .workspace .content .page-header h3 small .smaller, .workspace .content .page-header h4 small .smaller, .workspace .content .page-header h5 small .smaller, .workspace .content .page-header h6 small .smaller {
+    .content .page-header h1 small .smaller, .content .page-header h2 small .smaller, .content .page-header h3 small .smaller, .content .page-header h4 small .smaller, .content .page-header h5 small .smaller, .content .page-header h6 small .smaller {
       font-size: 14px;
       color: #aaa; }
 
@@ -2387,6 +2388,7 @@ input[type=submit].btn::-moz-focus-inner {
     .sheet .staff .bars .barline {
       height: 50px;
       float: left;
-      border-right: transparent solid 2px; }
+      border-right: transparent solid 2px;
+      margin-right: -2px; }
       .sheet .staff .bars .barline.show {
         border-right: #333 solid 2px; }

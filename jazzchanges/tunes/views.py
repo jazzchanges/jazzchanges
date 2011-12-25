@@ -32,7 +32,7 @@ def new_tune(request):
     return render_to_response('tunes/new.html', RequestContext(request, locals()))
 
 @login_required
-def view_tune(request, tune_id, key=None):
+def view_tune(request, tune_id, key=None, template='tunes/view.html'):
     tune = get_object_or_404(Tune, owner=request.user, id=tune_id)
     keys = KEYS
 
@@ -42,16 +42,18 @@ def view_tune(request, tune_id, key=None):
         if 1 > key or key > 12:
             raise Http404
 
-        changes = tune.get_changes(key=key)
-        systems, width = tune.get_systems(key=key)
+        systems = tune.get_systems(key=key)
     else:
         key = tune.key
-        changes = tune.get_changes()
-        systems, width = tune.get_systems() # can pass in width=620
+        systems = tune.get_systems() # can pass in width=620
     
     letter_key = KEY_DICT[key]
 
-    return render_to_response('tunes/view.html', RequestContext(request, locals()))
+    return render_to_response(template, RequestContext(request, locals()))
+
+@login_required
+def view_tune_fullscreen(request, tune_id, key=None):
+    return view_tune(request, tune_id, key=key, template='tunes/fullscreen.html')
 
 @login_required
 def edit_tune(request, tune_id):
