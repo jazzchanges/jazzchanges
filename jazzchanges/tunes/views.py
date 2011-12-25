@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.forms.models import model_to_dict
 
-from jazzchanges.tunes.models import Tune, Change, KEYS
+from jazzchanges.tunes.models import Tune, Change, KEYS, KEY_DICT
 from jazzchanges.tunes.forms import TuneForm
 
 @login_required
@@ -45,9 +45,12 @@ def view_tune(request, tune_id, key=None):
         changes = tune.get_changes(key=key)
         systems, width = tune.get_systems(key=key)
     else:
+        key = tune.key
         changes = tune.get_changes()
         systems, width = tune.get_systems() # can pass in width=620
     
+    letter_key = KEY_DICT[key]
+
     return render_to_response('tunes/view.html', RequestContext(request, locals()))
 
 @login_required

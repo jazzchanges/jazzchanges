@@ -2350,7 +2350,7 @@ input[type=submit].btn::-moz-focus-inner {
     .workspace .content .page-header .dropdown-menu a {
       font-size: 18px; }
   .workspace .content .page-header h1 small, .workspace .content .page-header h2 small, .workspace .content .page-header h3 small, .workspace .content .page-header h4 small, .workspace .content .page-header h5 small, .workspace .content .page-header h6 small {
-    color: #888; }
+    color: #666; }
     .workspace .content .page-header h1 small .smaller, .workspace .content .page-header h2 small .smaller, .workspace .content .page-header h3 small .smaller, .workspace .content .page-header h4 small .smaller, .workspace .content .page-header h5 small .smaller, .workspace .content .page-header h6 small .smaller {
       font-size: 14px;
       color: #aaa; }
