@@ -16,6 +16,7 @@ class TuneForm(BootstrapForm):
     
     key = forms.IntegerField(
         label='Original Key',
+        help_text="Don't worry about major or minor, we don't track that.",
         min_value=1,
         max_value=12,
         widget=forms.Select(choices=KEYS, attrs={'class':'small'}))

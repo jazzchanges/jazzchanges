@@ -2355,6 +2355,19 @@ input[type=submit].btn::-moz-focus-inner {
     .content .page-header h1 small .smaller, .content .page-header h2 small .smaller, .content .page-header h3 small .smaller, .content .page-header h4 small .smaller, .content .page-header h5 small .smaller, .content .page-header h6 small .smaller {
       font-size: 14px;
       color: #aaa; }
+  .content form.changes .change span {
+    display: inline-block;
+    padding-left: 16px; }
+    .content form.changes .change span.error {
+      color: #a33; }
+  .content form.changes .change .field-interval select {
+    width: 60px; }
+  .content form.changes .change .field-extension select {
+    width: 120px; }
+  .content form.changes .change .field-beats input {
+    width: 60px; }
+  .content form.changes .change .field-DELETE, .content form.changes .change .field-order {
+    display: none; }
 
 .sheet .staff {
   height: 110px;
@@ -2382,8 +2395,13 @@ input[type=submit].btn::-moz-focus-inner {
       font-size: 24px;
       line-height: 32px;
       width: 38px; }
+      .sheet .staff .chords .chord sup {
+        left: 2px; }
+      .sheet .staff .chords .chord.bigger {
+        font-size: 28px; }
   .sheet .staff .bars {
     float: right;
+    clear: right;
     height: 50px; }
     .sheet .staff .bars .barline {
       height: 50px;

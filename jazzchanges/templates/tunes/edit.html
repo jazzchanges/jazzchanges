@@ -7,12 +7,37 @@
 {% endblock breadcrumb_inner %}
 
 {% block inner_content %}
-  <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+  <div class="page-header">
+    <h1>{{ tune.title }} <small><span class="smaller">key of</span> {{ tune.get_key_display }} <span class="smaller">&amp; in</span> {{ tune.get_time_display }} <span class="smaller">time</span></small> 
+      <a class="btn error small" href="{% url tunes:delete tune.id %}">Delete</a>
+    </h1>
+  </div>
+
+  <form class="changes" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
   
-    {{ form.as_div }}
+    {{ formset.management_form }}
+
+    {{ form.errors }}
+    {{ form.non_field_errors }}
+
+    <div class="changes-inner">
+      {% for form in formset %}
+        <div class="change">
+          {{ form.id }}
+          {% for field in form.visible_fields %}
+            <span class="field-{{ field.name }} clearfix {% if field.errors %}error{% endif %}">{{ field.label }}: {{ field }}</span>
+          {% endfor %}
+
+          <span class="field-delete-button"><a class="btn error small">remove</a></span>
+        </div>
+      {% endfor %}
+    </div>
+
+    <br />
+    <p style="text-align:center"><a class="btn primary small add-form">add another change</a></p>
 
     <div class="actions">
-      <input type="submit" class="btn success" value="Continue &rarr;">
+      <input type="submit" class="btn success" value="Save Changes &rarr;">
     </div>
   </form>
 {% endblock inner_content %}

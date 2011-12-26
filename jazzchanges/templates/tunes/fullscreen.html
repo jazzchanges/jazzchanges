@@ -1,5 +1,7 @@
 {% extends "tunes/base.html" %}
 
+{% block top_bar %}{% endblock top_bar %}
+
 {% block container_fluid %}{% endblock container_fluid %}
 
 {% block content %}
@@ -24,7 +26,11 @@
         </div>
       </h1>
     </div>
+    
+    <br />
 
-    {% include "tunes/sheet.html" with width=840 %}
+    {% include "tunes/sheet.html" with width=840 bigger=1 %}
   </div>
 {% endblock content %}
+
+{% block footer %}{% endblock footer %}

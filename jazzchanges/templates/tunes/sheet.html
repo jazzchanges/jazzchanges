@@ -1,17 +1,24 @@
+{% load tune_tags %}
+
+{# we split each beat apart and discver the width #}
+{% math width tune.beats_per_system "$1 / $2" as beat_width %}
+
 <div class="sheet">
   {% for system in systems %}
-    <div class="staff">
+    {% math beat_width system|length "($1 * $2) + 100" as staff_width %}
+
+    <div class="staff" style="width:{{ staff_width }}px">
       <div class="clef"></div>
       <div class="time">{{ tune.beats_per_measure }}<br />{{ tune.note_value }}</div>
       <div class="chords">
         {% for change in system %}
-          <div class="chord" style="width:{% widthratio width tune.beats_per_system 1 %}px">{% ifchanged %}{{ change.chord }}{% else %}&nbsp;{% endifchanged %}</div>
+          <div class="chord{% if bigger %} bigger{% endif %}" style="width:{{ beat_width }}px">{% ifchanged %}{{ change.chord.0 }}<sup>{{ change.chord.1 }}</sup>{% else %}&nbsp;{% endifchanged %}</div>
         {% endfor %}
       </div>
 
       <div class="bars">
         {% for change in system %}
-          <div class="barline{% if forloop.counter|divisibleby:tune.beats_per_measure %} show{% endif %}" style="width:{% widthratio width tune.beats_per_system 1 %}px">&nbsp;</div>
+          <div class="barline{% if forloop.counter|divisibleby:tune.beats_per_measure %} show{% endif %}" style="width:{{ beat_width }}px">&nbsp;</div>
         {% endfor %}
       </div>
     </div>

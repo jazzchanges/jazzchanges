@@ -147,6 +147,38 @@
       }
     }
   }
+
+  form.changes {
+    .change {
+      span {
+        display:inline-block;
+        padding-left:16px;
+
+        &.error {
+          color:#a33;
+        }
+      }
+
+      .field-interval {
+        select {
+          width:60px;
+        }
+      }
+      .field-extension {
+        select {
+          width:120px;
+        }
+      }
+      .field-beats {
+        input {
+          width:60px;
+        }
+      }
+      .field-DELETE, .field-order {
+        display:none;
+      }
+    }
+  }
 } // content
 
 .sheet {
@@ -183,11 +215,20 @@
         line-height:32px;
 
         width:38px; // 620 / (4 * 4) # 4 measures of 4 (system length)
+
+        sup {
+          left: 2px;
+        }
+
+        &.bigger {
+          font-size:28px;
+        }
       }
     }
 
     .bars {
       float:right;
+      clear:right;
       height:50px;
 
       .barline {

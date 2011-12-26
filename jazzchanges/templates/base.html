@@ -13,6 +13,7 @@
 
     <!-- Le styles -->
     <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/jquery-ui-1.8.16.redmond.css" rel="stylesheet">
     <style type="text/css">
       body {
         padding-top: 40px;
@@ -20,6 +21,8 @@
     </style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+    
     <script src="{{ STATIC_URL }}js/base.js"></script>
     <script src="{{ STATIC_URL }}js/bootstrap-dropdown.js"></script>
 
@@ -31,28 +34,29 @@
   </head>
 
   <body>
+    {% block top_bar %}
+      <div class="topbar">
+        <div class="fill">
+          <div class="container{% block nav_fluid %}{% endblock nav_fluid %}">
+            {% block nav %}
+              <a class="brand" href="/">JazzChanges.net</a>
 
-    <div class="topbar">
-      <div class="fill">
-        <div class="container{% block nav_fluid %}{% endblock nav_fluid %}">
-          {% block nav %}
-            <a class="brand" href="/">JazzChanges.net</a>
-
-            <ul class="nav">
-              <li class="active"><a href="/">Home</a></li>
-              {% if request.user.is_authenticated %}
-                <li><a href="{% url tunes:workspace %}">Your Tunes</a></li>
-                <li><a href="{% url userena_profile_detail request.user.username %}">Your Profile</a></li>
-                <li><a href="{% url userena_signout %}">Sign Out</a></li>
-              {% else %}
-                <li><a href="{% url userena_signup %}">Sign Up</a></li>
-                <li><a href="{% url userena_signin %}">Sign In</a></li>
-              {% endif %}
-            </ul>
-          {% endblock nav %}
+              <ul class="nav">
+                <li class="active"><a href="/">Home</a></li>
+                {% if request.user.is_authenticated %}
+                  <li><a href="{% url tunes:workspace %}">Your Tunes</a></li>
+                  <li><a href="{% url userena_profile_detail request.user.username %}">Your Profile</a></li>
+                  <li><a href="{% url userena_signout %}">Sign Out</a></li>
+                {% else %}
+                  <li><a href="{% url userena_signup %}">Sign Up</a></li>
+                  <li><a href="{% url userena_signin %}">Sign In</a></li>
+                {% endif %}
+              </ul>
+            {% endblock nav %}
+          </div>
         </div>
       </div>
-    </div>
+    {% endblock top_bar %}
 
     {% block promo %}{% endblock promo %}
 
@@ -92,11 +96,11 @@
       {% block content_bottom %}{% endblock content_bottom %}
       <div class="clearfix"></div>
 
-      <footer>
       {% block footer %}
-        <p>&copy; Company 2011</p>
+        <footer>
+          <p>&copy; Company 2011</p>
+        </footer>
       {% endblock footer %}
-      </footer>
 
     </div> <!-- /container -->
     

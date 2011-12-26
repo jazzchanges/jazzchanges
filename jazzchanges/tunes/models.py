@@ -69,7 +69,7 @@ class Tune(models.Model):
         return int(self.time.split('/')[1])
 
     def get_changes(self, **kwargs):
-        changes = self.changes.with_key(**kwargs) # custom manager method
+        changes = self.changes.with_key(tune=self, **kwargs) # custom manager method
         return changes
     
     def get_systems(self, **kwargs):
@@ -124,8 +124,9 @@ EXTENSIONS_DICT = dict([(x, z) for x, y, z in EXTENSIONS_DEEP])
 
 
 class ChangeManager(models.Manager):
-    def with_key(self, key=None):
-        qs = super(ChangeManager, self).get_query_set()
+    def with_key(self, **kwargs):
+        key = kwargs.pop('key', None)
+        qs = super(ChangeManager, self).get_query_set().filter(**kwargs)
 
         [change.get_chord(key=key) for change in qs]
 
@@ -138,9 +139,9 @@ class Change(models.Model):
         return super(Change, self).__init__(*args, **kwargs)
 
     interval = models.PositiveIntegerField(choices=INTERVALS)
-    extension = models.CharField(max_length=32, default='', choices=EXTENSIONS)
+    extension = models.CharField(max_length=32, choices=EXTENSIONS)
 
-    beats = models.PositiveIntegerField(default=4)
+    beats = models.PositiveIntegerField()
     order = models.PositiveIntegerField(default=1)
 
     tune = models.ForeignKey('tunes.Tune', related_name='changes')
@@ -172,7 +173,7 @@ class Change(models.Model):
         key = kwargs['key'] if kwargs.get('key', None) else self.tune.key
 
         root = self.get_root(key)
-        self.chord = ''.join([root, self.short_extension])
+        self.chord = [root, self.short_extension]
 
         return self.chord
 

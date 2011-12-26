@@ -8,6 +8,8 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.forms.models import model_to_dict
 
+from django.forms.models import modelformset_factory
+
 from jazzchanges.tunes.models import Tune, Change, KEYS, KEY_DICT
 from jazzchanges.tunes.forms import TuneForm
 
@@ -59,17 +61,27 @@ def view_tune_fullscreen(request, tune_id, key=None):
 def edit_tune(request, tune_id):
     tune = get_object_or_404(Tune, owner=request.user, id=tune_id)
 
+    changes = tune.changes.all()
+    fields = ('interval', 'extension', 'beats', 'order')
+    extra = 0 if len(changes) else 1
+    ChangeFormSet = modelformset_factory(Change, fields=fields, can_delete=True, extra=extra)
+
     if request.method == 'POST':
-        form = EditTune(request.POST, request.FILES)
+        formset = ChangeFormSet(request.POST, queryset=changes, prefix='changes')
 
-        if form.is_valid():
-            tune = Tune(owner=request.user, **form.cleaned_data)
-            tune.save()
+        if formset.is_valid():
+            instances = formset.save(commit=False)
 
-            messages.success(request, 'Product created.')
-            return HttpResponseRedirect(reverse('tunes:edit', args=[tune.id]))
+            for i, change in enumerate(instances):
+                change.tune = tune
+                #change.order = i
+
+                change.save()
+
+            messages.success(request, 'Tune changes saved.')
+            return HttpResponseRedirect(reverse('tunes:view', args=[tune.id]))
     else:
-        form = EditTune()
+        formset = ChangeFormSet(queryset=changes, prefix='changes')
     
     return render_to_response('tunes/edit.html', RequestContext(request, locals()))
 
