@@ -5,7 +5,7 @@ distribute==0.6.24
 django-debug-toolbar==0.8.5
 django-devserver==0.3.1
 django-guardian==1.0.3
--e git+git@github.com:bryanhelmig/django-userena.git@6fbb5cf3a3a79484be0b033d7c4f9e3895d00779#egg=django_userena-dev
+-e git+https://bryanhelmig@github.com/bryanhelmig/django-userena.git@6fbb5cf3a3a79484be0b033d7c4f9e3895d00779#egg=django_userena-dev
 easy-thumbnails==1.0-alpha-21
 psycopg2==2.4.4
 wsgiref==0.1.2
