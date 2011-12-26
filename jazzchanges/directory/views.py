@@ -3,19 +3,25 @@ from jazzchanges import settings
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.template import RequestContext
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.contrib import messages
-from django.forms.models import model_to_dict
-
-from django.forms.models import modelformset_factory
+from django.views.decorators.cache import never_cache
+from django.db.models import Q
 
 from jazzchanges.tunes.models import Tune, Change, KEYS, KEY_DICT
-from jazzchanges.tunes.forms import TuneForm
 
 def root(request):
     tunes = Tune.objects.all()
     return render_to_response('directory/root.html', RequestContext(request, locals()))
+
+@never_cache
+def search(request):
+    tunes = Tune.objects.all()
+
+    keys = KEYS
+
+    q = request.GET.get('q', 'q')
+    search_tunes = Tune.objects.filter(Q(title__icontains=q) | Q(artist__icontains=q))
+    return render_to_response('directory/search.html', RequestContext(request, locals()))
 
 def view_tune(request, tune_id, artist_slug, title_slug, key=None, template='directory/view.html'):
     tunes = Tune.objects.all()

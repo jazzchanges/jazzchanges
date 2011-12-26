@@ -6,7 +6,7 @@
     <div class="container">
       <div class="promo-info">
         <h1>Find any fake sheet.</h1>
-        <p>Someone call a tune you haven't played in years? Worse, is it in a different key than normal? No worries! JazzChanges.net has your back.</p>
+        <p>Someone call a tune you haven't played in years? Worse, is it in a different key <br/>than normal? No worries! JazzChanges.net has your back.</p>
         <ul>
           <li>Easy to read fake sheets (chords only).</li>
           <li>Two click transposing.</li>
@@ -20,12 +20,12 @@
          <h3>Search Now!</h3>
         </div>
 
-        <form>
+        <form action="{% url directory:search %}">
           <fieldset>
             <div class="clearfix">
-              <label for="xlInput">Title</label>
+              <label for="xlInput">Title/Artist</label>
               <div class="input">
-                <input class="large" id="xlInput" name="xlInput" size="30" type="text">
+                <input class="large" id="q" name="q" size="30" type="text">
               </div>
             </div>
             <div class="actions">
@@ -40,3 +40,12 @@
     </div> 
   </div> <!-- promo -->
 {% endblock promo %}
+
+{% block content %}
+  <div class="hero-unit" style="margin-top:20px;">
+    <h1>Any changes. Any key.</h1>
+    <p>Well formated change sheets for the most common jazz standards. No melody, no fluff. If you need the melody or lead sheet, check out Amazon.com.</p>
+    <p><a class="btn primary large" href="{% url directory:root %}">View directory &raquo;</a></p>
+  </div>
+  
+{% endblock content %}
