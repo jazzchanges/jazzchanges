@@ -3,24 +3,15 @@ from django.contrib import admin
 
 from django.views.generic.simple import direct_to_template
 
-from jazzchanges.customuser.forms import (  NewSignupForm, NewAuthenticationForm, 
-                                            NewChangeEmailForm, NewPasswordChangeForm)
-
 admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
-    # customize userena forms and stuff
-    url(r'^accounts/signup/$', 'userena.views.signup', {'signup_form': NewSignupForm}),
-    url(r'^accounts/signin/$', 'userena.views.signin', {'auth_form': NewAuthenticationForm}),
 
-    url(r'^accounts/(?P<username>[\.\w]+)/email/$', 'userena.views.email_change', {'email_form': NewChangeEmailForm}),
-    url(r'^accounts/(?P<username>[\.\w]+)/password/$', 
-        'userena.views.password_change', 
-        {'pass_form': NewPasswordChangeForm, 'template_name': 'userena/password_form.html'}),
-
+    url(r'^accounts/', include('jazzchanges.customuser.urls')),
     url(r'^accounts/', include('userena.urls')),
+
     url(r'^tunes/', include('jazzchanges.tunes.urls', namespace='tunes')),
     url(r'^directory/', include('jazzchanges.directory.urls', namespace='directory')),
 

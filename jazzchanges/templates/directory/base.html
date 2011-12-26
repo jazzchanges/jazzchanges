@@ -12,7 +12,7 @@
 
         <ul>
           {% for tune in tunes %}
-            <li><a href="{% url directory:view tune.id %}">{{ tune.title }}</a> <small>{{ tune.get_key_display }} &amp; {{ tune.get_time_display }}</small></li>
+            <li><a href="{% url directory:view tune.id tune.artist_slug tune.title_slug %}">{{ tune.title }}</a> <small>{{ tune.get_key_display }} &amp; {{ tune.get_time_display }}</small></li>
           {% empty %}
             <li>None!</li>
           {% endfor %}
@@ -43,7 +43,8 @@
     {% endif %}
 
     {% block inner_content %}
-     <h1>Hello!</h1>
+     <h1>Welcome to JazzChanges!</h1>
+     <p>Choose or search for the desired tune on the left.</p>
     {% endblock inner_content %}
   </div>
 {% endblock content %}

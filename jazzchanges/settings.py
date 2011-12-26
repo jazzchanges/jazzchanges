@@ -124,7 +124,7 @@ FIXTURE_DIRS = (
 ANONYMOUS_USER_ID = -1
 AUTH_PROFILE_MODULE = 'customuser.UserProfile'
 
-LOGIN_REDIRECT_URL = '/accounts/%(username)s/'
+LOGIN_REDIRECT_URL = '/tunes/'
 LOGIN_URL = '/accounts/signin/'
 LOGOUT_URL = '/accounts/signout/'
 

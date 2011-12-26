@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm, PasswordResetForm
 
 from userena.forms import SignupForm, SignupFormOnlyEmail, AuthenticationForm, ChangeEmailForm, EditProfileForm
 
@@ -30,3 +30,13 @@ class NewPasswordChangeForm(PasswordChangeForm, BootstrapForm):
     class Meta:
         layout = (
             Fieldset('Change Password', 'old_password', 'new_password1', 'new_password2'), )
+
+class NewSetPasswordForm(SetPasswordForm, BootstrapForm):
+    class Meta:
+        layout = (
+            Fieldset('Reset Password', 'new_password1', 'new_password2'), )
+
+class NewPasswordResetForm(PasswordResetForm, BootstrapForm):
+    class Meta:
+        layout = (
+            Fieldset('Reset Password', 'email'), )

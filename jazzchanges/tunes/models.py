@@ -1,6 +1,7 @@
 from django.db import models
 
 from django.utils.translation import ugettext_lazy as _
+from django.template.defaultfilters import slugify
 
 
 SYSTEM_LENGTH = 4
@@ -57,6 +58,18 @@ class Tune(models.Model):
 
     owner = models.ForeignKey('auth.User', related_name='tunes')
 
+    ####################
+    #### PROPERTIES ####
+    ####################
+
+    @property
+    def title_slug(self):
+        return slugify(self.title)
+
+    @property
+    def artist_slug(self):
+        return slugify(self.artist)
+
     @property
     def beats_per_measure(self):
         return int(self.time.split('/')[0])
@@ -68,6 +81,11 @@ class Tune(models.Model):
     @property
     def note_value(self):
         return int(self.time.split('/')[1])
+    
+
+    ########################
+    #### HANDLE CHANGES ####
+    ########################
 
     def get_changes(self, **kwargs):
         changes = self.changes.with_key(tune=self, **kwargs) # custom manager method
