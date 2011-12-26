@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.db import models
 
 from django.utils.translation import ugettext_lazy as _
@@ -132,11 +134,12 @@ REVERSE_INTERVAL_DICT = dict([[y, x] for x, y in INTERVALS])
 
 EXTENSIONS_DEEP = ( 
     # (comma sep integers of intervals, name, short name)
-    ('0,4,7',       'major',        ''),
-    ('0,3,7',       'minor',        'm'),
-    ('0,4,7,10',    '7th',          '7'),
-    ('0,4,7,11',    'major 7th',    'maj7'),
-    ('0,3,7,10',    'minor 7th',    'm7'),
+    ('0,4,7',       'major',            ''),
+    ('0,3,7',       'minor',            'm'),
+    ('0,4,7,10',    '7th',              '7'),
+    ('0,4,7,11',    'major 7th',        'maj7'),
+    ('0,3,7,10',    'minor 7th',        'm7'),
+    ('0,3,6,10',    'minor 7th b5',     'ø'),
 )
 EXTENSIONS = [(x, y) for x, y, z in EXTENSIONS_DEEP]
 EXTENSIONS_DICT = dict([(x, z) for x, y, z in EXTENSIONS_DEEP])
