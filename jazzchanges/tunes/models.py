@@ -145,7 +145,7 @@ EXTENSIONS_DICT = dict([(x, z) for x, y, z in EXTENSIONS_DEEP])
 class ChangeManager(models.Manager):
     def with_key(self, **kwargs):
         key = kwargs.pop('key', None)
-        qs = super(ChangeManager, self).get_query_set().filter(**kwargs)
+        qs = super(ChangeManager, self).get_query_set().select_related().filter(**kwargs)
 
         [change.get_chord(key=key) for change in qs]
 

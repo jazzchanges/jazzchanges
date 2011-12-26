@@ -24,13 +24,16 @@ DATABASES = {
 }
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
+
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -60,6 +63,13 @@ INSTALLED_APPS = (
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'nds_$1_(f1=zw-56pl7z-91&amp;=%^frf)#5l_1gb(bcog_))0@hh'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
 
 if DEBUG:
     # Show emails in the console during developement.

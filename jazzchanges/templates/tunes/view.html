@@ -7,7 +7,7 @@
 
 {% block inner_content %}
   <div class="page-header">
-    <h1>{{ tune.title }} <small><em>{{ tune.artist }}</em> <span class="smaller">key of</span> {{ letter_key }} <span class="smaller">&amp; in</span> {{ tune.get_time_display }} <span class="smaller">time</span></small> 
+    <h1>{{ tune.title }} <small><em>{{ tune.artist }}</em> <span class="smaller">key of {{ letter_key }}</span></small> 
       <a class="btn primary small" href="{% url tunes:edit tune.id %}">Edit</a>
 
       <div class="dropdown" style="float:right" data-dropdown="dropdown">

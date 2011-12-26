@@ -9,7 +9,7 @@
     <br />
 
     <div class="page-header">
-      <h1>{{ tune.title }} <small><em>{{ tune.artist }}</em> <span class="smaller">key of</span> {{ letter_key }} <span class="smaller">&amp; in</span> {{ tune.get_time_display }} <span class="smaller">time</span></small> 
+      <h1>{{ tune.title }} <small><em>{{ tune.artist }}</em> <span class="smaller">key of {{ letter_key }}</span></small> 
         {% if key != tune.key %}
           <a class="btn small" href="{% url tunes:view_key tune.id key %}">Exit Fullscreen</a>
         {% else %}
