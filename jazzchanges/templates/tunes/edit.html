@@ -28,7 +28,8 @@
             <span class="field-{{ field.name }} clearfix {% if field.errors %}error{% endif %}">{{ field.label }}: {{ field }}</span>
           {% endfor %}
 
-          <span class="field-delete-button"><a class="btn error small">remove</a></span>
+          <span class="field-reorder-button"><a class="btn small">&varr;</a></span>
+          <span class="field-delete-button"><a class="btn error small">X</a></span>
         </div>
       {% endfor %}
     </div>

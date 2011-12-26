@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "tunes/base.html" %}
 {% load i18n %}
 
 {% block content_top %}
@@ -6,7 +6,7 @@
     {% if request.user.username == profile.user.username or request.user.username == user.username %}
       <ul class="tabs">
         <li><a href="{% url userena_profile_detail request.user.username %}">{% trans "View profile" %} &raquo;</a></li>
-        <li><a href="{% url userena_profile_edit request.user.username %}">{% trans "Edit details" %} &raquo;</a></li>
+        {% comment %}<li><a href="{% url userena_profile_edit request.user.username %}">{% trans "Edit details" %} &raquo;</a></li>{% endcomment %}
         <li><a href="{% url userena_password_change request.user.username %}">{% trans "Change password" %} &raquo;</a></li>
         <li><a href="{% url userena_email_change request.user.username %}">{% trans "Change email" %} &raquo;</a></li>
       </ul>

@@ -6,8 +6,8 @@
   {% if not customuser.stipe_setup or not customuser.get_products|length%}
     <div class="hero-unit">
       <h2>Welcome to your Workspace!</h2>
-      <p>This is a hero unit.</p>
-      <p><a href="#" class="btn primary">Important Button</a> <a href="#" class="btn success">Not Important Button</a></p>
+      <p>This is where you'll spend most of your time adding tunes. Just click the add new tune button below, or to your left to get started!</p>
+      <p><a href="{% url tunes:new %}" class="btn success">creating a new tune!</a></p>
     </div>
   {% endif %}
 {% endblock inner_content %}

@@ -146,6 +146,7 @@ INSTALLED_APPS = (
     'bootstrap',
 
     'jazzchanges.tunes',
+    'jazzchanges.directory',
     'jazzchanges.customuser',
 )
 

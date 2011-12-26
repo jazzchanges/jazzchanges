@@ -3,9 +3,14 @@ import os
 
 PROJECT_DIR = os.path.dirname(__file__)
 
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+
+INTERNAL_IPS = ('127.0.0.1',)
+
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+}
 
 DATABASES = {
     'default': {
@@ -18,6 +23,15 @@ DATABASES = {
     }
 }
 
+MIDDLEWARE_CLASSES = (
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+)
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -29,9 +43,18 @@ INSTALLED_APPS = (
 
     'south',
 
+    'userena', 
+    'guardian',
+    'easy_thumbnails',
+
+    'bootstrap',
+
     'jazzchanges.tunes',
+    'jazzchanges.directory',
+    'jazzchanges.customuser',
 
     'devserver',
+    'debug_toolbar',
 )
 
 

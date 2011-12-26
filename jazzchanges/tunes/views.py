@@ -54,8 +54,9 @@ def view_tune(request, tune_id, key=None, template='tunes/view.html'):
     return render_to_response(template, RequestContext(request, locals()))
 
 @login_required
-def view_tune_fullscreen(request, tune_id, key=None):
-    return view_tune(request, tune_id, key=key, template='tunes/fullscreen.html')
+def view_tune_fullscreen(*args, **kwargs):
+    kwargs['template'] = 'tunes/fullscreen.html'
+    return view_tune(*args, **kwargs)
 
 @login_required
 def edit_tune(request, tune_id):

@@ -22,6 +22,7 @@ urlpatterns = patterns('',
 
     url(r'^accounts/', include('userena.urls')),
     url(r'^tunes/', include('jazzchanges.tunes.urls', namespace='tunes')),
+    url(r'^directory/', include('jazzchanges.directory.urls', namespace='directory')),
 
     url(r'^$', direct_to_template, {'template': 'content/homepage.html'})
 )
