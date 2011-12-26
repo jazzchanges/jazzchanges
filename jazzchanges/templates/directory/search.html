@@ -1,5 +1,7 @@
 {% extends "directory/base.html" %}
 
+{% block title %}Search Fake Sheet{% endblock title %}
+
 {% block breadcrumb_inner %}
   <li><a href="{% url directory:root %}">All Tunes</a> <span class="divider">/</span></li>
   <li class="active">Search</li>
@@ -18,6 +20,8 @@
     
     <div class="page-header">
       <h1>{{ tune.title }} <small><em>{{ tune.artist }}</em> <span class="smaller">key of {{ tune.get_key_display }}</span></small> 
+        
+        <a class="btn small" href="{% url directory:view tune.id tune.artist_slug tune.title_slug %}">View</a>
 
         <div class="dropdown" style="float:right" data-dropdown="dropdown">
           <a class="btn success small dropdown-toggle" href="#">Transpose</a>
@@ -27,8 +31,6 @@
             {% endfor %}
           </ul>
         </div>
-        
-        <a class="btn small" href="{% url directory:view tune.id tune.artist_slug tune.title_slug %}">View</a>
 
       </h1>
     </div>

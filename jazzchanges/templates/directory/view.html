@@ -1,5 +1,7 @@
 {% extends "directory/base.html" %}
 
+{% block title %}{{ tune.title }} - {{ tune.artist }} | Fake Sheet{% endblock title %}
+
 {% block breadcrumb_inner %}
   <li><a href="{% url directory:root %}">All Tunes</a> <span class="divider">/</span></li>
   <li class="active">{{ tune.title }} ({{ tune.artist }})</li>
@@ -9,6 +11,12 @@
   <div class="page-header">
     <h1>{{ tune.title }} <small><em>{{ tune.artist }}</em> <span class="smaller">key of {{ letter_key }}</span></small> 
 
+      {% if key != tune.key %}
+        <a class="btn small" href="{% url directory:view_key_fullscreen tune.id tune.artist_slug tune.title_slug key %}">Fullscreen</a>
+      {% else %}
+        <a class="btn small" href="{% url directory:view_fullscreen tune.id tune.artist_slug tune.title_slug %}">Fullscreen</a>
+      {% endif %}
+
       <div class="dropdown" style="float:right" data-dropdown="dropdown">
         <a class="btn success small dropdown-toggle" href="#">Transpose</a>
         <ul class="dropdown-menu">
@@ -17,12 +25,6 @@
           {% endfor %}
         </ul>
       </div>
-
-      {% if key != tune.key %}
-        <a class="btn small" href="{% url directory:view_key_fullscreen tune.id tune.artist_slug tune.title_slug key %}">Fullscreen</a>
-      {% else %}
-        <a class="btn small" href="{% url directory:view_fullscreen tune.id tune.artist_slug tune.title_slug %}">Fullscreen</a>
-      {% endif %}
 
     </h1>
   </div>

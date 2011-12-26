@@ -1,5 +1,7 @@
 {% extends "tunes/base.html" %}
 
+{% block title %}Delete {{ tune.title }} - {{ tune.artist }}{% endblock title %}
+
 {% block breadcrumb_inner %}
   <li><a href="{% url tunes:workspace %}">Your Tunes</a> <span class="divider">/</span></li>
   <li><a href="{% url tunes:view tune.id %}">{{ tune }}</a> <span class="divider">/</span></li>
