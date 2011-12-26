@@ -30,6 +30,10 @@
 
   <div class="clearfix"></div>
   <br />
+  {% if not systems %}
+    <p style="text-align:center;"><small>No changes! <a href="{% url tunes:edit tune.id %}">Add some!</a></small></p>
+  {% endif %}
+  
   {% include "tunes/sheet.html" with width=610 %}
 
 {% endblock inner_content %}
