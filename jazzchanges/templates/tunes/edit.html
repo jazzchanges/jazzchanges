@@ -10,6 +10,7 @@
   <div class="page-header">
     <h1>{{ tune.title }} <small><span class="smaller">key of</span> {{ tune.get_key_display }} <span class="smaller">&amp; in</span> {{ tune.get_time_display }} <span class="smaller">time</span></small> 
       <a class="btn error small" href="{% url tunes:delete tune.id %}">Delete</a>
+      <a class="btn primary small" href="{% url tunes:edit_meta tune.id %}">Edit Meta</a>
     </h1>
   </div>
 

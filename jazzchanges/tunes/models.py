@@ -51,6 +51,7 @@ class Tune(models.Model):
         super(Tune, self).__init__(*args, **kwargs)
     
     title = models.CharField(max_length=255)
+    artist = models.CharField(max_length=255)
     key = models.PositiveIntegerField(choices=KEYS)
     time = models.CharField(max_length=12, default='4/4', choices=TIMES)
 

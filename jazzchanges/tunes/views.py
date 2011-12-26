@@ -11,7 +11,7 @@ from django.forms.models import model_to_dict
 from django.forms.models import modelformset_factory
 
 from jazzchanges.tunes.models import Tune, Change, KEYS, KEY_DICT
-from jazzchanges.tunes.forms import TuneForm
+from jazzchanges.tunes.forms import TuneForm, EditTuneForm
 
 @login_required
 def workspace(request):
@@ -85,6 +85,25 @@ def edit_tune(request, tune_id):
         formset = ChangeFormSet(queryset=changes, prefix='changes')
     
     return render_to_response('tunes/edit.html', RequestContext(request, locals()))
+
+@login_required
+def edit_tune_meta(request, tune_id):
+    tune = get_object_or_404(Tune, owner=request.user, id=tune_id)
+
+    if request.method == 'POST':
+        form = EditTuneForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            [setattr(tune, k, v) for k, v in form.cleaned_data.items()]
+            tune.save()
+            messages.success(request, 'Tune saved.')
+            return HttpResponseRedirect(reverse('tunes:view', args=[tune.id]))
+    else:
+        form = EditTuneForm(
+            initial=model_to_dict(tune, 
+                fields=['title', 'artist', 'key', 'time']))
+    
+    return render_to_response('tunes/edit_meta.html', RequestContext(request, locals()))
 
 @login_required
 def delete_tune(request, tune_id):
