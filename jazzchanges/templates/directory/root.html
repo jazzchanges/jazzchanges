@@ -1,1 +1,42 @@
 {% extends "directory/base.html" %}
+
+
+{% block inner_content %}
+
+  <form action="{% url directory:search %}">
+    <input class="large" value="{{ q }}" id="q" name="q" size="30" type="text">
+    <input type="submit" class="btn success" value="Search &rarr;">
+  </form>
+  <hr />
+  <br />
+
+  {% for tune in demo_tunes %}
+    
+    <div class="page-header">
+      <h1>{{ tune.title }} <small><em>{{ tune.artist }}</em> <span class="smaller">key of {{ tune.get_key_display }}</span></small> 
+
+        <div class="dropdown" style="float:right" data-dropdown="dropdown">
+          <a class="btn success small dropdown-toggle" href="#">Transpose</a>
+          <ul class="dropdown-menu">
+            {% for i, target_key in keys %}
+              <li><a href="{% url directory:view_key tune.id tune.artist_slug tune.title_slug i %}">{{ target_key }}{% if i == tune.key %} (original){% endif %}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        
+        <a class="btn small" href="{% url directory:view tune.id tune.artist_slug tune.title_slug %}">View</a>
+
+      </h1>
+    </div>
+
+    <div class="clearfix"></div>
+
+    {% include "tunes/sheet.html" with width=610 systems=tune.get_systems %}
+
+    <div class="clearfix"></div>
+    <br /> 
+    <br /> 
+    <br />
+  {% endfor %}
+
+{% endblock inner_content %}

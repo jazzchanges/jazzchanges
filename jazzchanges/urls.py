@@ -14,7 +14,8 @@ urlpatterns = patterns('',
     url(r'^tunes/', include('jazzchanges.tunes.urls', namespace='tunes')),
     url(r'^directory/', include('jazzchanges.directory.urls', namespace='directory')),
 
-    url(r'^$', direct_to_template, {'template': 'content/homepage.html'})
+    url(r'^$', direct_to_template, {'template': 'content/homepage.html'}, name='home'),
+    url(r'^legal/$', direct_to_template, {'template': 'content/legal.html'}, name='legal'),
 )
 
 

@@ -11,6 +11,7 @@ from jazzchanges.tunes.models import Tune, Change, KEYS, KEY_DICT
 
 def root(request):
     tunes = Tune.objects.all()
+    demo_tunes = tunes[0:3]
     return render_to_response('directory/root.html', RequestContext(request, locals()))
 
 @never_cache

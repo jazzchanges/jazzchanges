@@ -115,6 +115,9 @@ class Tune(models.Model):
             full_list += [change] * change.beats
 
         return list(chunks(full_list, self.beats_per_system))
+
+    class Meta:
+        ordering = ['title']
     
     def __unicode__(self):
         return u'%s in %s' % (self.title, self.get_key_display())
