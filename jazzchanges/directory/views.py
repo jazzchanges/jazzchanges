@@ -18,6 +18,7 @@ def root(request):
     return render_to_response('directory/root.html', RequestContext(request, locals()))
 
 def view_tune(request, tune_id, artist_slug, title_slug, key=None, template='directory/view.html'):
+    tunes = Tune.objects.all()
     tune = get_object_or_404(Tune, id=tune_id)
 
     # do redirect if url slugs are off
