@@ -1,7 +1,7 @@
 {% extends "directory/base.html" %}
 
 {% block breadcrumb_inner %}
-  <li><a href="{% url tunes:workspace %}">All Tunes</a> <span class="divider">/</span></li>
+  <li><a href="{% url directory:root %}">All Tunes</a> <span class="divider">/</span></li>
   <li class="active">{{ tune.title }} ({{ tune.artist }})</li>
 {% endblock breadcrumb_inner %}
 
