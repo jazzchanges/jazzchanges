@@ -145,12 +145,32 @@ REVERSE_INTERVAL_DICT = dict([[y, x] for x, y in INTERVALS])
 
 EXTENSIONS_DEEP = ( 
     # (comma sep integers of intervals, name, short name)
-    ('0,4,7',       'major',            ''),
-    ('0,3,7',       'minor',            'm'),
-    ('0,4,7,10',    '7th',              '7'),
-    ('0,4,7,11',    'major 7th',        'maj7'),
-    ('0,3,7,10',    'minor 7th',        'm7'),
-    ('0,3,6,10',    'minor 7th b5',     'ø'),
+    ('0,4,7',               'major',            ''),
+    ('0,3,6',               'diminished',       'o'),
+    ('0,4,8',               'augmented',        '+'),
+    ('0,3,7',               'minor',            'm'),
+
+    ('0,4,7,10',            '7th',              '7'),
+    ('0,4,7,11',            'major 7th',        'maj7'),
+    ('0,3,7,10',            'minor 7th',        'm7'),
+
+    ('0,4,7,10,13',         '7th b9',           '7b9'),
+    ('0,4,7,10,15',         '7th #9',           '7#9'),
+
+    ('0,3,6,10',            'minor 7th b5',     'ø'),
+    
+    ('0,4,7,10,14',         '9th',              '9'),
+    ('0,4,7,11,14',         'major 9th',        'maj9'),
+    ('0,3,7,10,14',         'minor 9th',        'm9'),
+    
+    ('0,4,7,10,14,17',      '11th',             '11'),
+    ('0,4,7,11,14,17',      'major 11th',       'maj11'),
+    ('0,3,7,10,14,17',      'minor 11th',       'm11'),
+    
+    ('0,4,7,10,14,17,21',   '13th',             '13'),
+    ('0,4,7,11,14,17,21',   'major 13th',       'maj13'),
+    ('0,3,7,10,14,17,21',   'minor 13th',       'm13'),
+
 )
 EXTENSIONS = [(x, y) for x, y, z in EXTENSIONS_DEEP]
 EXTENSIONS_DICT = dict([(x, z) for x, y, z in EXTENSIONS_DEEP])
