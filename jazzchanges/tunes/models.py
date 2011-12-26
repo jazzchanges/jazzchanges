@@ -85,6 +85,12 @@ class Tune(models.Model):
         return int(self.time.split('/')[1])
     
 
+    def query_string(self):
+        # artist + song name for amazon link
+        import urllib
+        return urllib.quote_plus(' '.join([self.artist.lower(), self.title.lower()]))
+    
+
     ########################
     #### HANDLE CHANGES ####
     ########################
