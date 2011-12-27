@@ -193,6 +193,7 @@ class Change(models.Model):
 
     interval = models.PositiveIntegerField(choices=INTERVALS)
     extension = models.CharField(max_length=32, choices=EXTENSIONS)
+    bass = models.PositiveIntegerField(choices=INTERVALS, blank=True, null=True)
 
     beats = models.PositiveIntegerField()
     order = models.PositiveIntegerField(default=1)
@@ -210,10 +211,19 @@ class Change(models.Model):
 
     def get_root(self, key):
         """
-        Transposes into the correct root for the change given a 
-        key (else defaults to tune's original key).
+        Transposes into the correct root for the change given a key.
         """
         transposed_key = key + self.interval
+        return EXTENDED_KEY_DICT[transposed_key]
+
+    def get_bass(self, key):
+        """
+        Transposes into the correct bass for the change given a key.
+        """
+        if self.bass is None:
+            return None
+        
+        transposed_key = key + self.bass
         return EXTENDED_KEY_DICT[transposed_key]
     
     def get_chord(self, **kwargs):
@@ -226,7 +236,8 @@ class Change(models.Model):
         key = kwargs['key'] if kwargs.get('key', None) else self.tune.key
 
         root = self.get_root(key)
-        self.chord = [root, self.short_extension]
+        bass = self.get_bass(key)
+        self.chord = [root, self.short_extension, bass]
 
         return self.chord
 

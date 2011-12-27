@@ -63,7 +63,7 @@ def edit_tune(request, tune_id):
     tune = get_object_or_404(Tune, owner=request.user, id=tune_id)
 
     changes = tune.changes.all()
-    fields = ('interval', 'extension', 'beats', 'order')
+    fields = ('interval', 'extension', 'bass', 'beats', 'order')
     extra = 0 if len(changes) else 1
     ChangeFormSet = modelformset_factory(Change, fields=fields, can_delete=True, extra=extra)
 

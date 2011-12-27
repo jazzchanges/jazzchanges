@@ -169,9 +169,14 @@
           width:120px;
         }
       }
+      .field-bass {
+        select {
+          width:60px;
+        }
+      }
       .field-beats {
         input {
-          width:60px;
+          width:40px;
         }
       }
       .field-DELETE, .field-order {
@@ -223,8 +228,8 @@
         &.bigger {
           font-size:28px;
         }
-      }
-    }
+      } // chord
+    } // chords
 
     .bars {
       float:right;
@@ -241,6 +246,6 @@
           border-right:#333 solid 2px;
         }
       }
-    }
-  }
-}
+    } // bars
+  } // staff
+} // sheet

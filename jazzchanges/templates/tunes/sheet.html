@@ -12,7 +12,7 @@
       <div class="time">{{ tune.beats_per_measure }}<br />{{ tune.note_value }}</div>
       <div class="chords">
         {% for change in system %}
-          <div class="chord{% if bigger %} bigger{% endif %}" style="width:{{ beat_width }}px">{% ifchanged %}{{ change.chord.0 }}<sup>{{ change.chord.1 }}</sup>{% else %}&nbsp;{% endifchanged %}</div>
+          <div class="chord{% if bigger %} bigger{% endif %}" style="width:{{ beat_width }}px">{% ifchanged %}{{ change.chord.0 }}<sup>{{ change.chord.1 }}</sup>{% if change.chord.2 %}/<sub>{{ change.chord.2 }}</sub>{% endif %}{% else %}&nbsp;{% endifchanged %}</div>
         {% endfor %}
       </div>
 

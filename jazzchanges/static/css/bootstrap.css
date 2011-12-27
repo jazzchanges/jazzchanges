@@ -2364,8 +2364,10 @@ input[type=submit].btn::-moz-focus-inner {
     width: 60px; }
   .content form.changes .change .field-extension select {
     width: 120px; }
-  .content form.changes .change .field-beats input {
+  .content form.changes .change .field-bass select {
     width: 60px; }
+  .content form.changes .change .field-beats input {
+    width: 40px; }
   .content form.changes .change .field-DELETE, .content form.changes .change .field-order {
     display: none; }
 
