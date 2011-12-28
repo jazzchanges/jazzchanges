@@ -49,7 +49,7 @@ def build_changeform(tune):
 
             self.fields['interval'].label = ''
             self.fields['interval'].choices = NEW_INTERVALS
-            self.fields['bass'].choices = [(None, '---')] + NEW_INTERVALS
+            self.fields['bass'].choices = [('', '---')] + NEW_INTERVALS
             self.fields['beats'].widget.attrs['autocomplete'] = 'off'
         
         class Meta:
