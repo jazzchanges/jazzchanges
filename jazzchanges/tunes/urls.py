@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^(?P<tune_id>\d+)/(?P<key>\d+)/full/$', views.view_tune_fullscreen, name='view_key_fullscreen'),
 
     url(r'^(?P<tune_id>\d+)/edit/$', views.edit_tune, name='edit'),
+    url(r'^(?P<tune_id>\d+)/edit/raw/$', views.edit_tune_raw, name='edit_raw'),
     url(r'^(?P<tune_id>\d+)/edit/meta/$', views.edit_tune_meta, name='edit_meta'),
     url(r'^(?P<tune_id>\d+)/delete/$', views.delete_tune, name='delete'),
 )

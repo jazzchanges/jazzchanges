@@ -2,7 +2,9 @@ from django import forms
 
 from bootstrap.forms import BootstrapForm, Fieldset
 
-from jazzchanges.tunes.models import Change, KEYS, EXTENDED_KEY_DICT, TIMES, INTERVALS
+from jazzchanges.tunes.models import (  Change, KEYS, EXTENDED_KEY_DICT, 
+                                        TIMES, INTERVALS, REVERSE_EXTENSIONS_DICT,
+                                        REVERSE_KEY_DICT, REVERSE_INTERVAL_DICT)
 
 
 class TuneForm(BootstrapForm):
@@ -37,6 +39,18 @@ class EditTuneForm(TuneForm):
         layout = (
             Fieldset('Edit Metadata', 'title', 'artist', 'key', 'time'),
         )
+
+
+class RawEditTuneForm(BootstrapForm):
+    class Meta:
+        layout = (
+            Fieldset('Edit Tune', 'raw'),
+        )
+    
+    raw = forms.CharField(
+        label='Edit Raw',
+        help_text='Do not use this if this confuses you!',
+        widget=forms.Textarea(attrs={'class':'xlarge'}))
 
 
 def build_changeform(tune):

@@ -7,10 +7,18 @@ Replace this with more appropriate tests for your application.
 
 from django.test import TestCase
 
-from jazzchanges.tunes.models import Tune, Change, REVERSE_KEY_DICT, REVERSE_INTERVAL_DICT, EXTENDED_KEY_DICT
+from django.contrib.auth.models import User
+
+from jazzchanges.tunes.models import (  Tune, Change, KEYS, EXTENDED_KEY_DICT, 
+                                        TIMES, INTERVALS, REVERSE_EXTENSIONS_DICT,
+                                        REVERSE_KEY_DICT, REVERSE_INTERVAL_DICT)
 
 
 class TunesTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_superuser('admin', 'admin@example.com', 'admin')
+
+
     def test_basic_transposition(self):
         """
         Run through a bunch of general tests for transposing keys/intevals.
@@ -33,3 +41,59 @@ class TunesTest(TestCase):
         self.assertEquals('Db', build_change('III', 'A')) # major 3rd
         self.assertEquals('E', build_change('V', 'A')) # 5th
         self.assertEquals('G', build_change('bVII', 'A')) # dominant 7th
+    
+    def test_detect_intervals_extensions(self):
+        from jazzchanges.tunes.utils import ascii_map, find_interval, find_extension
+
+        # find bVII
+        self.assertEquals(10, find_interval('bVII-7'))
+
+        # find -7
+        self.assertEquals('0,3,7,10', find_extension('bVII-7'))
+        
+
+    def test_text_import_export(self):
+        tune = Tune.objects.create(
+            title = 'Sample Progression',
+            artist = 'Sample Artist',
+            key = REVERSE_KEY_DICT['C'], # 1
+            time = '4/4',
+            owner = self.user)
+        
+        for x in (0, 1):
+            Change.objects.create(
+                interval = REVERSE_INTERVAL_DICT['II'],
+                extension = REVERSE_EXTENSIONS_DICT['-7'], # m7
+                beats = 4,
+                order = 1+(x*3),
+                tune = tune)
+
+            Change.objects.create(
+                interval = REVERSE_INTERVAL_DICT['V'],
+                extension = REVERSE_EXTENSIONS_DICT['7'], # dom 7
+                beats = 4,
+                order = 1+(x*3),
+                tune = tune)
+
+            Change.objects.create(
+                interval = REVERSE_INTERVAL_DICT['I'],
+                extension = REVERSE_EXTENSIONS_DICT['^'], # maj7
+                beats = 8,
+                order = 1+(x*3),
+                tune = tune)
+        
+        # no unicode!
+        prerendered = "II-7 / / / V7 / / / I^ / / / / / / / \nII-7 / / / V7 / / / I^ / / / / / / / \n"
+        self.assertEquals(prerendered, tune.dump())
+
+
+        new_tune = Tune.objects.create(
+            title = 'Same Sample Progression',
+            artist = 'Same Sample Artist',
+            key = REVERSE_KEY_DICT['C'], # 1
+            time = '4/4',
+            owner = self.user)
+        
+        changes = new_tune.load(prerendered, save=True)
+
+        self.assertEquals(prerendered, new_tune.dump())
