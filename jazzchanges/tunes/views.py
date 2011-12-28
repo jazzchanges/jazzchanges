@@ -11,7 +11,7 @@ from django.forms.models import model_to_dict
 from django.forms.models import modelformset_factory
 
 from jazzchanges.tunes.models import Tune, Change, KEYS, KEY_DICT
-from jazzchanges.tunes.forms import TuneForm, EditTuneForm
+from jazzchanges.tunes.forms import TuneForm, EditTuneForm, build_changeform
 
 @login_required
 def workspace(request):
@@ -61,11 +61,11 @@ def view_tune_fullscreen(*args, **kwargs):
 @login_required
 def edit_tune(request, tune_id):
     tune = get_object_or_404(Tune, owner=request.user, id=tune_id)
-
     changes = tune.changes.select_related().all()
-    fields = ('interval', 'extension', 'bass', 'beats', 'order')
+
+    ChangeForm = build_changeform(tune)
     extra = 0 if len(changes) else 1
-    ChangeFormSet = modelformset_factory(Change, fields=fields, can_delete=True, extra=extra)
+    ChangeFormSet = modelformset_factory(Change, form=ChangeForm, can_delete=True, extra=extra)
 
     if request.method == 'POST':
         formset = ChangeFormSet(request.POST, queryset=changes, prefix='changes')

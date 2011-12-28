@@ -2,7 +2,7 @@ from django import forms
 
 from bootstrap.forms import BootstrapForm, Fieldset
 
-from jazzchanges.tunes.models import KEYS, TIMES
+from jazzchanges.tunes.models import Change, KEYS, EXTENDED_KEY_DICT, TIMES, INTERVALS
 
 
 class TuneForm(BootstrapForm):
@@ -37,3 +37,23 @@ class EditTuneForm(TuneForm):
         layout = (
             Fieldset('Edit Metadata', 'title', 'artist', 'key', 'time'),
         )
+
+
+def build_changeform(tune):
+    class ChangeForm(forms.ModelForm):
+        def __init__(self, *args, **kwargs):
+            super(ChangeForm, self).__init__(*args, **kwargs)
+
+            # replace the nasty old intervals with better 
+            NEW_INTERVALS = [(x, tune.get_root(x)) for x, y in INTERVALS]
+
+            self.fields['interval'].label = ''
+            self.fields['interval'].choices = NEW_INTERVALS
+            self.fields['bass'].choices = [(None, '---')] + NEW_INTERVALS
+            self.fields['beats'].widget.attrs['autocomplete'] = 'off'
+        
+        class Meta:
+            model = Change
+            fields = ('interval', 'extension', 'bass', 'beats', 'order')
+    
+    return ChangeForm

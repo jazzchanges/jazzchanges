@@ -28,7 +28,7 @@
         <div class="change">
           {{ form.id }}
           {% for field in form.visible_fields %}
-            <span class="field-{{ field.name }} clearfix {% if field.errors %}error{% endif %}">{{ field.label }}: {{ field }}</span>
+            <span class="field-{{ field.name }} clearfix {% if field.errors %}error{% endif %}">{% if field.label %}{{ field.label }}: {% endif %}{{ field }}</span>
           {% endfor %}
 
           <span class="field-reorder-button"><a class="btn small">&varr;</a></span>

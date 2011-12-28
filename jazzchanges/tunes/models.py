@@ -97,6 +97,13 @@ class Tune(models.Model):
     #### HANDLE CHANGES ####
     ########################
 
+    def get_root(self, interval):
+        """
+        Transposes into the correct root for the change given an interval.
+        """
+        transposed_key = self.key + interval
+        return EXTENDED_KEY_DICT[transposed_key]
+
     def get_changes(self, **kwargs):
         changes = self.changes.with_key(tune=self, **kwargs) # custom manager method
         return changes
@@ -148,11 +155,11 @@ EXTENSIONS_DEEP = (
     ('0,4,7',               'major',            ''),
     ('0,3,6',               'diminished',       'o'),
     ('0,4,8',               'augmented',        '+'),
-    ('0,3,7',               'minor',            'm'),
+    ('0,3,7',               'minor',            '-'),
 
     ('0,4,7,10',            '7th',              '7'),
     ('0,4,7,11',            'major 7th',        '▵'),
-    ('0,3,7,10',            'minor 7th',        'm7'),
+    ('0,3,7,10',            'minor 7th',        '-7'),
 
     ('0,4,7,10,13',         '7th b9',           '7b9'),
     ('0,4,7,10,15',         '7th #9',           '7#9'),
@@ -161,15 +168,15 @@ EXTENSIONS_DEEP = (
     
     ('0,4,7,10,14',         '9th',              '9'),
     ('0,4,7,11,14',         'major 9th',        '▵9'),
-    ('0,3,7,10,14',         'minor 9th',        'm9'),
+    ('0,3,7,10,14',         'minor 9th',        '-9'),
     
     ('0,4,7,10,14,17',      '11th',             '11'),
     ('0,4,7,11,14,17',      'major 11th',       '▵11'),
-    ('0,3,7,10,14,17',      'minor 11th',       'm11'),
+    ('0,3,7,10,14,17',      'minor 11th',       '-11'),
     
     ('0,4,7,10,14,17,21',   '13th',             '13'),
     ('0,4,7,11,14,17,21',   'major 13th',       '▵13'),
-    ('0,3,7,10,14,17,21',   'minor 13th',       'm13'),
+    ('0,3,7,10,14,17,21',   'minor 13th',       '-13'),
 
 )
 EXTENSIONS = [(x, y) for x, y, z in EXTENSIONS_DEEP]
