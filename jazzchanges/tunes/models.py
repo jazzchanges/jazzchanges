@@ -5,7 +5,137 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.template.defaultfilters import slugify
 
-from jazzchanges.tunes.utils import unicode_map
+from jazzchanges.tunes.utils import ascii_map, find_interval, find_extension
+
+
+
+INTERVALS = (
+    (0, 'I'), # C
+    (1, 'bII'),
+    (2, 'II'), # D
+    (3, 'bIII'),
+    (4, 'III'), # E
+    (5, 'IV'), # F
+    (6, 'bV'),
+    (7, 'V'), # G
+    (8, '#V'),
+    (9, 'VI'), # A
+    (10, 'bVII'),
+    (11, 'VII'), # B
+)
+INTERVAL_DICT = dict(INTERVALS)
+REVERSE_INTERVAL_DICT = dict([[y, x] for x, y in INTERVALS])
+
+
+EXTENSIONS_DEEP = ( 
+    # (comma sep integers of intervals, name, short name)
+    ('0,4,7',               'major',            u''),
+    ('0,3,6',               'diminished',       u'o'),
+    ('0,4,8',               'augmented',        u'+'),
+    ('0,3,7',               'minor',            u'-'),
+
+    ('0,4,7,10',            '7th',              u'7'),
+    ('0,4,7,11',            'major 7th',        u'▵'),
+    ('0,3,7,10',            'minor 7th',        u'-7'),
+
+    ('0,4,7,10,13',         '7th b9',           u'7b9'),
+    ('0,4,7,10,15',         '7th #9',           u'7#9'),
+
+    ('0,3,6,10',            'minor 7th b5',     u'ø'),
+
+    ('0,4,7,9',             '6th',              u'6'),
+    ('0,3,7,9',             'minor 6th',        u'-6'),
+    
+    ('0,4,7,10,14',         '9th',              u'9'),
+    ('0,4,7,11,14',         'major 9th',        u'▵9'),
+    ('0,3,7,10,14',         'minor 9th',        u'-9'),
+    
+    ('0,4,7,10,14,17',      '11th',             u'11'),
+    ('0,4,7,11,14,17',      'major 11th',       u'▵11'),
+    ('0,3,7,10,14,17',      'minor 11th',       u'-11'),
+    
+    ('0,4,7,10,14,17,21',   '13th',             u'13'),
+    ('0,4,7,11,14,17,21',   'major 13th',       u'▵13'),
+    ('0,3,7,10,14,17,21',   'minor 13th',       u'-13'),
+)
+
+EXTENSIONS = [(x, y) for x, y, z in EXTENSIONS_DEEP]
+EXTENSIONS_DICT = dict([(x, z) for x, y, z in EXTENSIONS_DEEP])
+# ascii version of extensions
+REVERSE_EXTENSIONS_DICT = dict([(ascii_map(z), x) for x, y, z in EXTENSIONS_DEEP])
+
+
+class ChangeManager(models.Manager):
+    def with_key(self, **kwargs):
+        key = kwargs.pop('key', None)
+        qs = super(ChangeManager, self).get_query_set().select_related().filter(**kwargs)
+
+        [change.get_chord(key=key) for change in qs]
+
+        return qs
+
+
+class Change(models.Model):
+    def __init__(self, *args, **kwargs):
+        self.chord = None # text representation of chord
+        return super(Change, self).__init__(*args, **kwargs)
+
+    interval = models.PositiveIntegerField(choices=INTERVALS)
+    extension = models.CharField(max_length=32, choices=EXTENSIONS)
+    bass = models.PositiveIntegerField(choices=INTERVALS, blank=True, null=True)
+
+    beats = models.PositiveIntegerField()
+    order = models.PositiveIntegerField(default=1)
+
+    tune = models.ForeignKey('tunes.Tune', related_name='changes')
+
+    objects = ChangeManager()
+
+    @property
+    def short_extension(self):
+        """
+        Takes a rather convoluted 1,3,7,10 extension and turns it a 'm7'.
+        """
+        return EXTENSIONS_DICT[self.extension]
+
+    def get_root(self, key):
+        """
+        Transposes into the correct root for the change given a key.
+        """
+        transposed_key = key + self.interval
+        return EXTENDED_KEY_DICT[transposed_key]
+
+    def get_bass(self, key):
+        """
+        Transposes into the correct bass for the change given a key.
+        """
+        if self.bass is None:
+            return None
+        
+        transposed_key = key + self.bass
+        return EXTENDED_KEY_DICT[transposed_key]
+    
+    def get_chord(self, **kwargs):
+        """
+        Returns a chord and sets to chord attribute as text.
+
+        Key is an integer 1-12.
+        """
+        # for some reason kwarg.pop isn't working...
+        key = kwargs['key'] if kwargs.get('key', None) else self.tune.key
+
+        root = self.get_root(key)
+        bass = self.get_bass(key)
+        self.chord = [root, self.short_extension, bass]
+
+        return self.chord
+
+    class Meta:
+        ordering = ['order']
+
+    def __unicode__(self):
+        return u'%s (%s) for %d beats' % (self.get_chord(), self.interval, self.beats)
+
 
 
 SYSTEM_LENGTH = 4
@@ -134,148 +264,56 @@ class Tune(models.Model):
         out = []
 
         for system in self.get_systems():
+            old_change = None
             for change in system:
-                out.append(change.get_interval_display() + change.short_extension)
+
+                if change == old_change:
+                    out.append( u'/ ' )
+                else:
+                    out.append(change.get_interval_display() + change.short_extension + ' ')
                 
-                out.extend( [u'/'] * ( change.beats - 1 ) )
+                old_change = change
+                
+            out.append( u'\n' )
         
-        out = u' '.join(out)
-        return unicode_map(out)
+        out = u''.join(out)
+        return ascii_map(out)
     
     def load(self, s):
-        pass
+        # turn into a single line
+        s = ' '.join(s.splitlines())
+        # split by spaces
+        s = s.split(' ')
+        # remove all empty items
+        s = [_s for _s in s if _s]
+
+        change_list = []
+        change = None
+
+        for item in s:
+            if item == '/':
+                # same change
+                change['beats'] += 1
+            else:
+                if change: 
+                    change_list.append(change)
+                
+                # new change
+                change = dict(
+                    beats=1, 
+                    interval=find_interval(item),
+                    extension=find_extension(item))
+
+        if change: # final change
+            change_list.append(change)
+
+        for i, change in enumerate(change_list, start=1):
+            Change.objects.create(tune=self, order=i, **change)
+        
+
 
     class Meta:
         ordering = ['title']
     
     def __unicode__(self):
         return u'%s in %s' % (self.title, self.get_key_display())
-
-
-
-
-INTERVALS = (
-    (0, 'I'), # C
-    (1, 'bII'),
-    (2, 'II'), # D
-    (3, 'bIII'),
-    (4, 'III'), # E
-    (5, 'IV'), # F
-    (6, 'bV'),
-    (7, 'V'), # G
-    (8, '#V'),
-    (9, 'VI'), # A
-    (10, 'bVII'),
-    (11, 'VII'), # B
-)
-INTERVAL_DICT = dict(INTERVALS)
-REVERSE_INTERVAL_DICT = dict([[y, x] for x, y in INTERVALS])
-
-
-EXTENSIONS_DEEP = ( 
-    # (comma sep integers of intervals, name, short name)
-    ('0,4,7',               'major',            u''),
-    ('0,3,6',               'diminished',       u'o'),
-    ('0,4,8',               'augmented',        u'+'),
-    ('0,3,7',               'minor',            u'-'),
-
-    ('0,4,7,10',            '7th',              u'7'),
-    ('0,4,7,11',            'major 7th',        u'▵'),
-    ('0,3,7,10',            'minor 7th',        u'-7'),
-
-    ('0,4,7,10,13',         '7th b9',           u'7b9'),
-    ('0,4,7,10,15',         '7th #9',           u'7#9'),
-
-    ('0,3,6,10',            'minor 7th b5',     u'ø'),
-
-    ('0,4,7,9',             '6th',              u'6'),
-    ('0,3,7,9',             'minor 6th',        u'-6'),
-    
-    ('0,4,7,10,14',         '9th',              u'9'),
-    ('0,4,7,11,14',         'major 9th',        u'▵9'),
-    ('0,3,7,10,14',         'minor 9th',        u'-9'),
-    
-    ('0,4,7,10,14,17',      '11th',             u'11'),
-    ('0,4,7,11,14,17',      'major 11th',       u'▵11'),
-    ('0,3,7,10,14,17',      'minor 11th',       u'-11'),
-    
-    ('0,4,7,10,14,17,21',   '13th',             u'13'),
-    ('0,4,7,11,14,17,21',   'major 13th',       u'▵13'),
-    ('0,3,7,10,14,17,21',   'minor 13th',       u'-13'),
-)
-
-EXTENSIONS = [(x, y) for x, y, z in EXTENSIONS_DEEP]
-EXTENSIONS_DICT = dict([(x, z) for x, y, z in EXTENSIONS_DEEP])
-REVERSE_EXTENSIONS_DICT = dict([(y, x) for x, y, z in EXTENSIONS_DEEP])
-
-
-class ChangeManager(models.Manager):
-    def with_key(self, **kwargs):
-        key = kwargs.pop('key', None)
-        qs = super(ChangeManager, self).get_query_set().select_related().filter(**kwargs)
-
-        [change.get_chord(key=key) for change in qs]
-
-        return qs
-
-
-class Change(models.Model):
-    def __init__(self, *args, **kwargs):
-        self.chord = None # text representation of chord
-        return super(Change, self).__init__(*args, **kwargs)
-
-    interval = models.PositiveIntegerField(choices=INTERVALS)
-    extension = models.CharField(max_length=32, choices=EXTENSIONS)
-    bass = models.PositiveIntegerField(choices=INTERVALS, blank=True, null=True)
-
-    beats = models.PositiveIntegerField()
-    order = models.PositiveIntegerField(default=1)
-
-    tune = models.ForeignKey('tunes.Tune', related_name='changes')
-
-    objects = ChangeManager()
-
-    @property
-    def short_extension(self):
-        """
-        Takes a rather convoluted 1,3,7,10 extension and turns it a 'm7'.
-        """
-        return EXTENSIONS_DICT[self.extension]
-
-    def get_root(self, key):
-        """
-        Transposes into the correct root for the change given a key.
-        """
-        transposed_key = key + self.interval
-        return EXTENDED_KEY_DICT[transposed_key]
-
-    def get_bass(self, key):
-        """
-        Transposes into the correct bass for the change given a key.
-        """
-        if self.bass is None:
-            return None
-        
-        transposed_key = key + self.bass
-        return EXTENDED_KEY_DICT[transposed_key]
-    
-    def get_chord(self, **kwargs):
-        """
-        Returns a chord and sets to chord attribute as text.
-
-        Key is an integer 1-12.
-        """
-        # for some reason kwarg.pop isn't working...
-        key = kwargs['key'] if kwargs.get('key', None) else self.tune.key
-
-        root = self.get_root(key)
-        bass = self.get_bass(key)
-        self.chord = [root, self.short_extension, bass]
-
-        return self.chord
-
-    class Meta:
-        ordering = ['order']
-
-    def __unicode__(self):
-        return u'%s (%s) for %d beats' % (self.get_chord(), self.interval, self.beats)
