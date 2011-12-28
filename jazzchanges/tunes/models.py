@@ -5,6 +5,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.template.defaultfilters import slugify
 
+from jazzchanges.tunes.utils import unicode_map
+
 
 SYSTEM_LENGTH = 4
 
@@ -122,6 +124,26 @@ class Tune(models.Model):
             full_list += [change] * change.beats
 
         return list(chunks(full_list, self.beats_per_system))
+    
+
+    #########################
+    #### IMPORT & EXPORT ####
+    #########################
+
+    def dump(self):
+        out = []
+
+        for system in self.get_systems():
+            for change in system:
+                out.append(change.get_interval_display() + change.short_extension)
+                
+                out.extend( [u'/'] * ( change.beats - 1 ) )
+        
+        out = u' '.join(out)
+        return unicode_map(out)
+    
+    def load(self, s):
+        pass
 
     class Meta:
         ordering = ['title']
@@ -152,38 +174,39 @@ REVERSE_INTERVAL_DICT = dict([[y, x] for x, y in INTERVALS])
 
 EXTENSIONS_DEEP = ( 
     # (comma sep integers of intervals, name, short name)
-    ('0,4,7',               'major',            ''),
-    ('0,3,6',               'diminished',       'o'),
-    ('0,4,8',               'augmented',        '+'),
-    ('0,3,7',               'minor',            '-'),
+    ('0,4,7',               'major',            u''),
+    ('0,3,6',               'diminished',       u'o'),
+    ('0,4,8',               'augmented',        u'+'),
+    ('0,3,7',               'minor',            u'-'),
 
-    ('0,4,7,10',            '7th',              '7'),
-    ('0,4,7,11',            'major 7th',        '▵'),
-    ('0,3,7,10',            'minor 7th',        '-7'),
+    ('0,4,7,10',            '7th',              u'7'),
+    ('0,4,7,11',            'major 7th',        u'▵'),
+    ('0,3,7,10',            'minor 7th',        u'-7'),
 
-    ('0,4,7,10,13',         '7th b9',           '7b9'),
-    ('0,4,7,10,15',         '7th #9',           '7#9'),
+    ('0,4,7,10,13',         '7th b9',           u'7b9'),
+    ('0,4,7,10,15',         '7th #9',           u'7#9'),
 
-    ('0,3,6,10',            'minor 7th b5',     'ø'),
+    ('0,3,6,10',            'minor 7th b5',     u'ø'),
 
-    ('0,4,7,9',            '6th',              '6'),
-    ('0,3,7,9',            'minor 6th',        '-6'),
+    ('0,4,7,9',             '6th',              u'6'),
+    ('0,3,7,9',             'minor 6th',        u'-6'),
     
-    ('0,4,7,10,14',         '9th',              '9'),
-    ('0,4,7,11,14',         'major 9th',        '▵9'),
-    ('0,3,7,10,14',         'minor 9th',        '-9'),
+    ('0,4,7,10,14',         '9th',              u'9'),
+    ('0,4,7,11,14',         'major 9th',        u'▵9'),
+    ('0,3,7,10,14',         'minor 9th',        u'-9'),
     
-    ('0,4,7,10,14,17',      '11th',             '11'),
-    ('0,4,7,11,14,17',      'major 11th',       '▵11'),
-    ('0,3,7,10,14,17',      'minor 11th',       '-11'),
+    ('0,4,7,10,14,17',      '11th',             u'11'),
+    ('0,4,7,11,14,17',      'major 11th',       u'▵11'),
+    ('0,3,7,10,14,17',      'minor 11th',       u'-11'),
     
-    ('0,4,7,10,14,17,21',   '13th',             '13'),
-    ('0,4,7,11,14,17,21',   'major 13th',       '▵13'),
-    ('0,3,7,10,14,17,21',   'minor 13th',       '-13'),
-
+    ('0,4,7,10,14,17,21',   '13th',             u'13'),
+    ('0,4,7,11,14,17,21',   'major 13th',       u'▵13'),
+    ('0,3,7,10,14,17,21',   'minor 13th',       u'-13'),
 )
+
 EXTENSIONS = [(x, y) for x, y, z in EXTENSIONS_DEEP]
 EXTENSIONS_DICT = dict([(x, z) for x, y, z in EXTENSIONS_DEEP])
+REVERSE_EXTENSIONS_DICT = dict([(y, x) for x, y, z in EXTENSIONS_DEEP])
 
 
 class ChangeManager(models.Manager):
