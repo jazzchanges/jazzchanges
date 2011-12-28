@@ -2337,9 +2337,16 @@ input[type=submit].btn::-moz-focus-inner {
     width: 170px; }
   .content form .help-block {
     color: #aaa; }
-  .content .page-header a.btn {
-    float: right;
-    margin-left: 4px; }
+  .content .page-header h1 {
+    margin: 0 0 2px; }
+  .content .page-header .buttons {
+    padding: 12px 0 0;
+    float: right; }
+    .content .page-header .buttons .dropdown {
+      float: left; }
+    .content .page-header .buttons a.btn {
+      float: left;
+      margin-left: 4px; }
   .content .page-header .dropdown-toggle::after {
     margin-top: 5px; }
   .content .page-header .dropdown-menu {
@@ -2350,9 +2357,11 @@ input[type=submit].btn::-moz-focus-inner {
     top: 33px; }
     .content .page-header .dropdown-menu a {
       font-size: 18px; }
-  .content .page-header h1 small, .content .page-header h2 small, .content .page-header h3 small, .content .page-header h4 small, .content .page-header h5 small, .content .page-header h6 small {
+  .content .page-header .meta {
+    padding: 0 0 6px; }
+  .content .page-header small {
     color: #666; }
-    .content .page-header h1 small .smaller, .content .page-header h2 small .smaller, .content .page-header h3 small .smaller, .content .page-header h4 small .smaller, .content .page-header h5 small .smaller, .content .page-header h6 small .smaller {
+    .content .page-header small .smaller {
       font-size: 14px;
       color: #aaa; }
   .content form.changes .change span {

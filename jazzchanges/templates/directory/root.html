@@ -12,23 +12,7 @@
   <br />
 
   {% for tune in demo_tunes %}
-    
-    <div class="page-header">
-      <h1>{{ tune.title }} <small><em>{{ tune.artist }}</em> <span class="smaller">key of {{ tune.get_key_display }}</span></small> 
-        
-        <a class="btn small" href="{% url directory:view tune.id tune.artist_slug tune.title_slug %}">View</a>
-
-        <div class="dropdown" style="float:right" data-dropdown="dropdown">
-          <a class="btn success small dropdown-toggle" href="#">Transpose</a>
-          <ul class="dropdown-menu">
-            {% for i, target_key in keys %}
-              <li><a href="{% url directory:view_key tune.id tune.artist_slug tune.title_slug i %}">{{ target_key }}{% if i == tune.key %} (original){% endif %}</a></li>
-            {% endfor %}
-          </ul>
-        </div>
-
-      </h1>
-    </div>
+    {% include "directory/page_header.html" with key=tune.key %}
 
     <div class="clearfix"></div>
 

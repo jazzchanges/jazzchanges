@@ -119,9 +119,22 @@
   }
 
   .page-header {
-    a.btn {
+    h1 {
+     margin:0 0 2px; 
+    }
+
+    .buttons {
+      padding:12px 0 0;
       float:right;
-      margin-left:4px;
+
+      .dropdown {
+        float:left;
+      }
+
+      a.btn {
+        float:left;
+        margin-left:4px;
+      }
     }
 
     .dropdown-toggle::after {
@@ -138,7 +151,11 @@
       }
     }
 
-    h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
+    .meta {
+      padding:0 0 6px;
+    }
+
+    small {
       color: #666;
 
       .smaller {

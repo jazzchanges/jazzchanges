@@ -9,6 +9,18 @@
 {% endblock breadcrumb_inner %}
 
 {% block inner_content %}
+  <div class="page-header">
+    <div class="buttons">
+      <a class="btn error small" href="{% url tunes:delete tune.id %}">Delete</a>
+    </div>
+
+    <h1>{{ tune.title }}</h1>
+
+    <div class="meta">
+      <small><span class="smaller">key of</span> {{ tune.get_key_display }} <span class="smaller">&amp; in</span> {{ tune.get_time_display }} <span class="smaller">time</span></small> 
+    </div>
+  </div>
+
   <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
   
     {{ form.as_div }}
