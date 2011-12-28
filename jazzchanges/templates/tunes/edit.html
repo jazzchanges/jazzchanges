@@ -11,6 +11,7 @@
 {% block inner_content %}
   <div class="page-header">
     <div class="buttons">
+      <a class="btn primary small" href="{% url tunes:edit_raw tune.id %}">Edit Raw</a>
       <a class="btn primary small" href="{% url tunes:edit_meta tune.id %}">Edit Meta</a>
       <a class="btn error small" href="{% url tunes:delete tune.id %}">Delete</a>
     </div>

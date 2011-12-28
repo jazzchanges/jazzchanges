@@ -94,5 +94,6 @@ class TunesTest(TestCase):
             time = '4/4',
             owner = self.user)
         
-        new_tune.load(prerendered)
+        changes = new_tune.load(prerendered, save=True)
+
         self.assertEquals(prerendered, new_tune.dump())

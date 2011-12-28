@@ -41,6 +41,18 @@ class EditTuneForm(TuneForm):
         )
 
 
+class RawEditTuneForm(BootstrapForm):
+    class Meta:
+        layout = (
+            Fieldset('Edit Tune', 'raw'),
+        )
+    
+    raw = forms.CharField(
+        label='Edit Raw',
+        help_text='Do not use this if this confuses you!',
+        widget=forms.Textarea(attrs={'class':'xlarge'}))
+
+
 def build_changeform(tune):
     class ChangeForm(forms.ModelForm):
         def __init__(self, *args, **kwargs):

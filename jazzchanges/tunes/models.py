@@ -279,7 +279,7 @@ class Tune(models.Model):
         out = u''.join(out)
         return ascii_map(out)
     
-    def load(self, s):
+    def load(self, s, save=False):
         # turn into a single line
         s = ' '.join(s.splitlines())
         # split by spaces
@@ -288,27 +288,29 @@ class Tune(models.Model):
         s = [_s for _s in s if _s]
 
         change_list = []
-        change = None
+        change = {}
 
         for item in s:
             if item == '/':
                 # same change
                 change['beats'] += 1
             else:
-                if change: 
-                    change_list.append(change)
-                
                 # new change
                 change = dict(
                     beats=1, 
                     interval=find_interval(item),
                     extension=find_extension(item))
-
-        if change: # final change
-            change_list.append(change)
-
+                
+                change_list.append(change)
+        
+        out_changes = []
         for i, change in enumerate(change_list, start=1):
-            Change.objects.create(tune=self, order=i, **change)
+            out_changes.append(Change(tune=self, order=i, **change))
+        
+        if save:
+            [change.save() for change in out_changes]
+        
+        return out_changes
         
 
 
