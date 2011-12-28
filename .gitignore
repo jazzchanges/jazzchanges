@@ -8,3 +8,5 @@ public/media
 *.sqlite
 .sass-cache
 build
+
+test-coverage

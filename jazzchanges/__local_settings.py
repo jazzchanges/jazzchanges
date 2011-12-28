@@ -38,4 +38,6 @@ if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
     MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
-    INSTALLED_APPS += ('devserver', 'debug_toolbar',)
+    INSTALLED_APPS += ('devserver', 'debug_toolbar', 'django_coverage')
+
+    COVERAGE_REPORT_HTML_OUTPUT_DIR = os.path.join(PROJECT_DIR, 'test-reports')
